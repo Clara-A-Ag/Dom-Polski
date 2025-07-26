@@ -1,0 +1,36 @@
+# Node.js
+node_modules/
+dist/
+/temp/
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea/
+.vscode/ # Configuración del editor VS Code
+.DS_Store # Archivos de macOS
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Local environment variables
+.env
+.env.local
+.env.*.local
+!.env.example # Si tienen un archivo .env.example para mostrar la estructura
+
+# Build output
+.output/
+.nuxt/ # Si en el futuro usan Nuxt.js (framework sobre Vue)
+.cache/
+
+# Misc
+*.log
+
+# Vite specific
+.vite/
