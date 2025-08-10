@@ -8,12 +8,12 @@ import FooterComponent from './components/FooterComponent.vue'
   
   
   <div id="app-container">
-    <HeaderComponent />
+    <HeaderComponent></HeaderComponent>
     
     <main>
       <RouterView />
     </main>
-<FooterComponent></FooterComponent>
+    <FooterComponent></FooterComponent>
   </div>
 
 

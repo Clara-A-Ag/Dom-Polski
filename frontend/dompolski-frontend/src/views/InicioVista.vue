@@ -9,14 +9,6 @@
     <meta name="author" content=" Agüero Clara A. , Massoni Agustin">
 </head>
 <body>
-    <header>
-        
-    </header>
-    
-    
-    <footer>
-        <p>&copy; 2025 Institución. Todos los derechos reservados.</p>
-    </footer>
 </body>
 
 </template>
