@@ -6,8 +6,10 @@ import { RouterLink } from 'vue-router';
 <header>
 <div class="Menu">
     <nav>
-      <RouterLink to="/" class="logo">DOM POLSKI</RouterLink>
-      <div class="nav-links">
+        <div class="logo">
+        <RouterLink to="/">DOM POLSKI</RouterLink> 
+    </div>
+<div class="nav-links">
         <RouterLink to="/">Inicio</RouterLink>
         <RouterLink to="/contacto">Contactanos</RouterLink>
         <RouterLink to="/actividades">Actividades</RouterLink>
@@ -20,7 +22,7 @@ import { RouterLink } from 'vue-router';
 </header>
 </template>
 
-<style>
+<style scoped>
 .logo img{
     width: 120px;
     height: auto;
@@ -33,6 +35,13 @@ header .logo{
 .Menu{
 background-image: url(Dom-Polski\frontend\dompolski-frontend\public\imagenes\argentinian-flag-5350831.jpg);
 width:100%;
-height: 200px;;
+height: 300px;;
+background-size: 100%;
+}
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+    flex-direction: row;
 }
 </style>
