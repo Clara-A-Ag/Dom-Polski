@@ -13,8 +13,12 @@ export default {
     return {
       images: [
         { src: '/public/imagenes/flag-792067.jpg', alt:'Imagen de la bandera polaca' },
+        {src: '/public/imagenes/SantaFe14.jpg', alt: 'Imagen de Dom Polski Frente'},
+        {src: '/public/imagenes/IMG-20230406-WA0006.jpg', alt: 'Imagen de Fundadores y socios'},
+        
         { src:'/public/imagenes/wawel-3683040.jpg', alt: 'Imagen del Castillo de Wawel' },
         { src: '/public/imagenes/old-town-5062333.jpg', alt: 'Ciudad Polaca' },
+        { src: '/public/imagenes/IMG_9846.jpeg', alt: 'Imagen del Ballet Aguila Blanca'},
       ],
       currentIndex: 0,
       intervalId: null,

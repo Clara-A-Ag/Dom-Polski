@@ -22,7 +22,13 @@ import BodyComponent from './components/InicioComponentes/BodyComponent.vue'
 
 </template>
 
-<style scoped>
+<style>
+*{
+  margin: 0;
+  padding: 0;
+  
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;
