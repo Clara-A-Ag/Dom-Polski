@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router';
   <header class="main-header">
     <nav class="header-nav">
       <RouterLink to="/" class="logo-container">
-        <img src="/Dom-Polski/frontend/dompolski-frontend/public/imagenes/logo dp mas.png" alt="Logo Dom Polski" class="logo-image">
+        <img src="/imagenes/logo dp mas.png" alt="Logo Dom Polski" class="logo-image">
       </RouterLink>
 
       <div class="nav-links">
@@ -25,7 +25,7 @@ import { RouterLink } from 'vue-router';
 <style scoped>
 /* Estilos del encabezado principal */
 .main-header {
-  background-image: url(Dom-Polski\frontend\dompolski-frontend\public\imagenes\argentinian-flag-5350831.jpg); /* Un color de fondo claro, puedes ajustarlo */
+  background-image: url(/imagenes/argentinian-flag-5350831.jpg); /* Un color de fondo claro, puedes ajustarlo */
   background-size: cover;
   border-bottom: 1px solid #ddd; /* Una línea en la parte inferior para separarlo del contenido */
 }
