@@ -9,6 +9,7 @@
     <meta name="author" content=" Agüero Clara A. , Massoni Agustin">
 </head>
 <body>
+
 </body>
 
 </template>
@@ -21,6 +22,7 @@
 import { ref, onMounted } from 'vue';
 // Importamos Axios para hacer las peticiones HTTP
 import axios from 'axios';
+import BodyComponent from '@/components/InicioComponentes/BodyComponent.vue';
 
 // Definimos una variable reactiva llamada contenidoInicio, inicialmente un array vacío.
 const contenidoInicio = ref([]);
