@@ -12,9 +12,9 @@ export default {
   data() {
     return {
       images: [
-        { src: '/Dom-Polski/frontend/dompolski-frontend/public/imagenes/flag-792067.jpg', alt:'Imagen de la bandera polaca' },
-        { src:'/Dom-Polski/frontend/dompolski-frontend/public/imagenes/wawel-3683040.jpg', alt: 'Imagen del Castillo de Wawel' },
-        { src: '/Dom-Polski/frontend/dompolski-frontend/public/imagenes/old-town-5062333.jpg', alt: 'Ciudad Polaca' },
+        { src: '/public/imagenes/flag-792067.jpg', alt:'Imagen de la bandera polaca' },
+        { src:'/public/imagenes/wawel-3683040.jpg', alt: 'Imagen del Castillo de Wawel' },
+        { src: '/public/imagenes/old-town-5062333.jpg', alt: 'Ciudad Polaca' },
       ],
       currentIndex: 0,
       intervalId: null,
