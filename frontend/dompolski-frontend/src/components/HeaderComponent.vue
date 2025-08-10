@@ -5,7 +5,7 @@ import { RouterLink } from 'vue-router';
   <header class="main-header">
     <nav class="header-nav">
       <RouterLink to="/" class="logo-container">
-        <img src="C:\Users\agust\OneDrive\Escritorio\Projecto Dom Polski\Dom-Polski\frontend\dompolski-frontend\public\imagenes\logo dp mas.png" alt="Logo Dom Polski" class="logo-image">
+        <img src="/Dom-Polski/frontend/dompolski-frontend/public/imagenes/logo dp mas.png" alt="Logo Dom Polski" class="logo-image">
       </RouterLink>
 
       <div class="nav-links">
