@@ -10,7 +10,7 @@
 
 <style scoped>
 footer {
-    background: #810d0d;
+    background: #c00606;
     color: white;
     text-align: center;
     font-size: "lora", serif;
