@@ -9,6 +9,14 @@
 </script>
 
 <style scoped>
+footer {
+    background: #810d0d;
+    color: white;
+    text-align: center;
+    font-size: "lora", serif;
+    font-weight: bold;
+    padding: 15px;
+}
 
 
 </style>
