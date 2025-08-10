@@ -1,20 +1,20 @@
-<script setup></script>
-
+<script setup>
+import { RouterLink } from 'vue-router';
+</script>
 <template>
+    
 <header>
 <div class="Menu">
-<div class="logo">
-    <img src=".\imagenes\logo dp mas.png" alt="Logo de la institucion">
-</div>
-<nav>  
-    <ul>
-    <li><a href="#inicio">Inicio</a></li>
-    <li><a href="#contacto">Contactanos</a></li>
-    <li><a href="#actividades">Actividades</a></li>
-    <li><a href="#nuestrahistoria">Nuestra Historia</a></li>
-    <li><a href="#novedades">Novedades</a></li>
-    <li><a href="#blog">Blog</a></li>
-    </ul>
+    <nav>
+      <RouterLink to="/" class="logo">DOM POLSKI</RouterLink>
+      <div class="nav-links">
+        <RouterLink to="/">Inicio</RouterLink>
+        <RouterLink to="/contacto">Contactanos</RouterLink>
+        <RouterLink to="/actividades">Actividades</RouterLink>
+        <RouterLink to="/nuestrahistoria">Nuestra Historia</RouterLink>
+        <RouterLink to="/novedades">Novedades</RouterLink>
+        <RouterLink to="/blog">Blog</RouterLink>
+        </div>
     </nav>
 </div>
 </header>
@@ -31,7 +31,7 @@ header .logo{
     text-align: left;
 }
 .Menu{
-background-image: url(/imagenes/img/argentinian-flag-5350831_1280.jpg);
+background-image: url(Dom-Polski\frontend\dompolski-frontend\public\imagenes\argentinian-flag-5350831.jpg);
 width:100%;
 height: 200px;;
 }

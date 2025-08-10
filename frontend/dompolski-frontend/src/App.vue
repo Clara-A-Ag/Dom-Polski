@@ -1,26 +1,21 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import InicioVista from '/components/HeaderComponent.vue'
-import HeaderComponent from '/components/HeaderComponent.vue'
+import HeaderComponent from './components/HeaderComponent.vue'
 
 </script>
 
 <template>
   
   
-  <header>
-<h1>Dom Polski</h1>
-<nav>
-  <RouterLink to="/">Inicio</RouterLink>
-  <RouterLink to="/contacto">Contactanos</RouterLink>  
-  
-</nav>
+  <div id="app-container">
+    <HeaderComponent />
+    
+    <main>
+      <RouterView />
+    </main>
 
-  </header>
+  </div>
 
-<main>  
-  <RouterView />
-</main>
 
 </template>
 
