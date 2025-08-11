@@ -5,6 +5,14 @@
     </div>
 <h1 class="carrusel-title">Dom Polski - Santa Fe</h1>
 </div>
+<div class="Descripcion">
+  <a>¡Bienvenidos a Dom Polski Santa Fe! Somos una asociación civil sin fines de lucro que busca promover la cultura polaca en Argentina. Nuestro objetivo es preservar y difundir las tradiciones, costumbres y valores de la comunidad polaca en Santa Fe y sus alrededores.</a>
+  <li>En Dom Polski, organizamos eventos culturales, clases de idioma polaco, talleres de cocina tradicional y actividades recreativas para todas las edades. Nuestro espacio está abierto a todos aquellos interesados en conocer más sobre la rica herencia cultural polaca.</li>
+  <li>¡Únete a nosotros y descubre la magia de la cultura polaca en Santa Fe!</li>
+  <a href="https://share.google/c6dt38SD54IBFe4TN">Av. Aristóbulo del Valle 5444, Santa Fe, Argentina, 3000</a>
+  <li>Sociedad Cultural y Deportiva; Union Polaca y Seccion Ex Combatientes</li>
+
+</div>
 
 </template>
 
@@ -75,7 +83,7 @@ export default {
 
 .carousel-track img {
   width: 100%;
-  height: auto;
+  height: 600px;
   flex-shrink: 0;
   object-fit: cover;
 }
@@ -91,5 +99,13 @@ export default {
   font-size: 24px;
   text-align: center;
   z-index: 10; /* Asegura que el título esté por encima de las imágenes */
+}
+.Descripcion {
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #a7c1e3;
+  border-radius: 8px;
+  font-style: 'lora', serif;
+  font-weight: solid;
 }
 </style>
