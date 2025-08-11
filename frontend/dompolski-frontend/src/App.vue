@@ -2,8 +2,6 @@
 import { RouterView } from 'vue-router'
 import HeaderComponent from './components/HeaderComponent.vue'
 import FooterComponent from './components/FooterComponent.vue'
-import BodyComponent from './components/InicioComponentes/BodyComponent.vue'
-
 </script>
 
 <template>
@@ -13,7 +11,6 @@ import BodyComponent from './components/InicioComponentes/BodyComponent.vue'
     <HeaderComponent></HeaderComponent>
     
     <main>
-      <BodyComponent></BodyComponent>
       <RouterView />
     </main>
     <FooterComponent></FooterComponent>
