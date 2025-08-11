@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 </script>
+
 <template>
   <header class="main-header">
     <nav class="header-nav">
@@ -8,58 +9,73 @@ import { RouterLink } from 'vue-router';
         <img src="/imagenes/logo dp mas.png" alt="Logo Dom Polski" class="logo-image">
       </RouterLink>
 
-      <div class="nav-links">
-        <RouterLink to="/">Inicio</RouterLink>
-        <RouterLink to="/contacto">Contactanos</RouterLink>
-        <RouterLink to="/actividades">Actividades</RouterLink>
-        <RouterLink to="/nuestrahistoria">Nuestra Historia</RouterLink>
-        <RouterLink to="/novedades">Novedades</RouterLink>
-        <RouterLink to="/blog">Blog</RouterLink>
+      <div class="nav-links-container">
+        <div class="nav-links">
+          <RouterLink to="/">Inicio</RouterLink>
+          <RouterLink to="/contacto">Contactanos</RouterLink>
+          <RouterLink to="/actividades">Actividades</RouterLink>
+          <RouterLink to="/nuestrahistoria">Nuestra Historia</RouterLink>
+          <RouterLink to="/novedades">Novedades</RouterLink>
+          <RouterLink to="/blog">Blog</RouterLink>
+        </div>
       </div>
     </nav>
   </header>
 </template>
 
-
-
 <style scoped>
 /* Estilos del encabezado principal */
 .main-header {
-  background-image: url(/imagenes/argentinian-flag-5350831.jpg); /* Un color de fondo claro, puedes ajustarlo */
-  background-size: cover;
-  border-bottom: 1px solid #ddd; /* Una línea en la parte inferior para separarlo del contenido */
+  background-color: #f8efd6;
+  border-bottom: 1px solid #000000;
+  padding: 0 2rem; 
+  height: 100px;  
+  box-sizing: border-box; 
 }
 
 /* Estilos de la barra de navegación */
 .header-nav {
-  display: flex; /* Habilitamos Flexbox */
-  justify-content: space-between; /* El logo se va a la izquierda y los enlaces a la derecha */
-  align-items: center; /* Centramos verticalmente todos los elementos */
-  max-width: 1200px; /* Ancho máximo para el contenido, puedes ajustarlo */
-  margin: 0 auto; /* Centramos la barra de navegación en la página */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
 }
 
 /* Estilos del contenedor del logo */
+
 .logo-image {
-  width: 120px;
+  width: 100px;
   height: auto;
   display: block;
+}
+
+/* Contenedor para los enlaces de navegación */
+.nav-links-container {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
 }
 
 /* Estilos de los enlaces de navegación */
 .nav-links {
   display: flex;
-  gap: 1.5rem; /* Espacio entre los enlaces */
+  gap: 1.5rem;
 }
 
 .nav-links a {
-  color: #333; /* Color del texto del enlace */
-  text-decoration: none; /* Quitamos el subrayado */
+  color: #333;
+  text-decoration: none;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 20px;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .nav-links a:hover {
-  color: #c00; /* Color al pasar el mouse por encima */
+  color: white;
+  background-color: #c00;
 }
 </style>
