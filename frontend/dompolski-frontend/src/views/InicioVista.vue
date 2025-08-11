@@ -16,9 +16,8 @@ import BodyComponent from '@/components/InicioComponentes/BodyComponent.vue';
 
 export default{
     name: 'InicioVista',
-    components: {
-    BodyComponent
-},
+    components: { BodyComponent },
+
 setup() {
     const contenidoInicio = ref([]);
 
