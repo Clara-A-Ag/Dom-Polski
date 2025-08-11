@@ -15,6 +15,7 @@ export default {
       images: [
       {src: '/imagenes/dompofrente.JPG', alt: 'Imagen de Dom Polski Frente'},  
       { src: '/imagenes/flag-792067.jpg', alt:'Imagen de la bandera polaca' },
+      {src: '/imagenes/bandargentina.jpg', alt: 'Imagen de la bandera Argentina'},
         {src: '/imagenes/dompocartel.JPG', alt: 'Imagen de Dom Polski Cartel'},
       { src:'/imagenes/wawel-3683040.jpg', alt: 'Imagen del Castillo de Wawel' },
       {src: '/imagenes/haciendopierogi.jpeg', alt: 'Imagen de Dom Polski haciendo Pierogi'},
