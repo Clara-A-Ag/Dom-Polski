@@ -26,7 +26,9 @@ import { RouterLink } from 'vue-router';
 <style scoped>
 /* Estilos del encabezado principal */
 .main-header {
-  background-color: #f8efd6;
+  background-color: #aad7f7;
+  background-image: url('/imagenes/bandargentina.jpg');
+  background-position: center;
   border-bottom: 1px solid #000000;
   padding: 0 2rem; 
   height: 100px;  
@@ -65,7 +67,8 @@ import { RouterLink } from 'vue-router';
 }
 
 .nav-links a {
-  color: #333;
+  color: #ffffff;
+  text-shadow: #000000 1px 1px 2px;
   text-decoration: none;
   font-weight: bold;
   font-size: 20px;
@@ -76,7 +79,7 @@ import { RouterLink } from 'vue-router';
 
 .nav-links a:hover {
   color: white;
-  background-color: #c00;
+  background-color: #c00606;
 }
 
 </style>
