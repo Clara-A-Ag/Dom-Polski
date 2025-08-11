@@ -37,7 +37,7 @@ import { RouterLink } from 'vue-router';
 .header-nav {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   max-width: 1200px;
   margin: 0 auto;
   height: 100%;
@@ -78,4 +78,5 @@ import { RouterLink } from 'vue-router';
   color: white;
   background-color: #c00;
 }
+
 </style>
