@@ -1,6 +1,7 @@
 <template>
 <div>
 <BodyComponent></BodyComponent>
+<BodyComponent2></BodyComponent2>
 </div>
 </template>
 
@@ -13,10 +14,11 @@ import { ref, onMounted } from 'vue';
 // Importamos Axios para hacer las peticiones HTTP
 import axios from 'axios';
 import BodyComponent from '@/components/InicioComponentes/BodyComponent.vue';
+import BodyComponent2 from '@/components/InicioComponentes/BodyComponet2.vue';
 
 export default{
     name: 'InicioVista',
-    components: { BodyComponent },
+    components: { BodyComponent, BodyComponent2 },
 
 setup() {
     const contenidoInicio = ref([]);
