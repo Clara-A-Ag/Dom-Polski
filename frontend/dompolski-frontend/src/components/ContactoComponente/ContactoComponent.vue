@@ -1,5 +1,5 @@
 <template>
-<section class="contacto">>
+    <div>
 <ul class="redes-sociales">
             <li>
                 <a href="https://www.instagram.com/dompolski.santa.fe" target="_blank">
@@ -61,7 +61,7 @@
                 </a>
             </li>
         </ul>
-    </section>
+    </div>
     
 
 
@@ -76,5 +76,27 @@
 </script>
 
 <style>
+.redes-sociales { /*dar estilo a los logos*/
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    justify-content: center;
+}
+
+.redes-sociales li a svg {
+    fill: black;
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.redes-sociales li a:hover svg {
+    transform: scale(1.2);
+}
+
+.redes-sociales li a:active svg {
+    transform: scale(1.4);
+}
 
 </style>
