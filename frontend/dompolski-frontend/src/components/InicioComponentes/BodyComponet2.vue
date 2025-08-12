@@ -7,7 +7,8 @@ tradiciones, costumbres y valores de la comunidad polaca en Santa Fe y sus alred
 <p>En Dom Polski, organizamos eventos culturales, clases de idioma polaco, talleres de cocina tradicional y actividades recreativas para todas 
 las edades. Nuestro espacio está abierto a todos aquellos interesados en conocer más sobre la rica herencia cultural polaca.</p>
 <p>¡Únete a nosotros y descubre la magia de la cultura polaca en Santa Fe!</p>
-<br><a>Dirección: </a><a href="https://share.google/c6dt38SD54IBFe4TN" target="_blank" rel="noopener noreferrer">Av. Aristóbulo del Valle 5444, Santa Fe, Argentina, 3000</a>
+<br>
+<a >Dirección: <a href="https://share.google/c6dt38SD54IBFe4TN" target="_blank" rel="noopener noreferrer">Av. Aristóbulo del Valle 5444, Santa Fe, Argentina, 3000</a></a>
 
 </div>
 
@@ -21,15 +22,19 @@ las edades. Nuestro espacio está abierto a todos aquellos interesados en conoce
 
 <style scoped>
 .Descripcion {
-background-color: #aa7da4;
+background-color: #aad7f7;
 font-style: 'lora', serif;
 font-weight: solid;
-color:antiquewhite;
+color:rgb(51, 6, 6);
 padding-top: 15px;
 text-align: center;
 padding-left: 5px;
 padding-right: 5px;
 padding-bottom: 15px;
+}
+a{
+    color: #ee1c19; /* Cambia el color del enlace */
+    text-decoration: none; /* Elimina el subrayado del enlace */    
 }
 p{
 margin-bottom: 15px;
@@ -37,7 +42,7 @@ margin-bottom: 15px;
 .bienvenidos{
 font-size: 20px;
 font-weight: bold;
-color:#ffffff;
+color:#ee1c19;
 }
 
 
