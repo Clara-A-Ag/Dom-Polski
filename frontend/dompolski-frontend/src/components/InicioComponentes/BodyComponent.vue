@@ -81,14 +81,15 @@ export default {
 }
 .carrusel-title{
   position: absolute; /* Posicionamiento absoluto para colocar el título sobre las imágenes. */
-  top: 75%; /* Ajusta según sea necesario */
+  top: 50%; /* Ajusta según sea necesario */
   left: 50%;
   transform: translateX(-50%);
-  color: white;
- text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para mejorar la legibilidad */
+  color: #ffffff;
+ text-shadow: 2px 2px 4px #c00606; /* Sombra para mejorar la legibilidad */
   padding: 10px 20px;
   border-radius: 5px;
   font-size: 24px;
+  font-weight: 900;
   text-align: center;
   z-index: 10; /* Asegura que el título esté por encima de las imágenes */
 }
