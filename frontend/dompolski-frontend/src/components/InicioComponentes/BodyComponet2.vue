@@ -9,8 +9,13 @@ las edades. Nuestro espacio está abierto a todos aquellos interesados en conoce
 <p>¡Únete a nosotros y descubre la magia de la cultura polaca en Santa Fe!</p>
 <br>
 <a >Dirección: <a href="https://share.google/c6dt38SD54IBFe4TN" target="_blank" rel="noopener noreferrer">Av. Aristóbulo del Valle 5444, Santa Fe, Argentina, 3000</a></a>
+</div>
+<div class="img">
+    <img src="/imagenes/polaquita1.png" alt="polaca" class="img-polaca">
+    <img src="/imagenes/polaquito 1.png" alt="polaco" class="img-polaco">
 
 </div>
+
 
 
 </template>
@@ -44,6 +49,26 @@ font-size: 20px;
 font-weight: bold;
 color:#ee1c19;
 }
+.img{
+    display: flex;
+background-color: #aad7f7;
+justify-content: space-between; /* Distribuye el espacio entre los elementos */
+align-items: center; /* Alinea verticalmente los elementos al centro (opcional) */
+    
+}
+img{
+    width: 150px;
+    height: 250px;
+    margin: 1px;
+    display: flex; /* Convierte el contenedor en un flex container */
 
-
+}
+.img-polaca{
+    justify-content: left;
+    align-items: left;
+}
+.img-polaco{
+    justify-content: right;
+    align-items: right;
+}
 </style>

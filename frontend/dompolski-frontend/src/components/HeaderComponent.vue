@@ -33,6 +33,7 @@ import { RouterLink } from 'vue-router';
   padding: 0 2rem; 
   height: 100px;  
   box-sizing: border-box; 
+  width: 100%;
 }
 
 /* Estilos de la barra de navegación */
