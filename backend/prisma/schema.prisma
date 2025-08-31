@@ -5,11 +5,11 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 // prisma/schema.prisma
-
+//generador prisma
 generator client {
   provider = "prisma-client-js"
 }
-
+//coneccion a postgresSQL
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -22,16 +22,6 @@ model ContenidoInicio {
   imagenUrl   String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-}
-// Generador de Prisma
-generator client {
-  provider = "prisma-client-js"
-}
-
-// Conexión a PostgreSQL
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 // ========================
