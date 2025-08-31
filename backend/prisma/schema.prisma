@@ -23,3 +23,93 @@ model ContenidoInicio {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+// Generador de Prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Conexión a PostgreSQL
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========================
+// MODELOS
+// ========================
+
+model Usuario {
+  id          Int       @id @default(autoincrement())
+  nombre      String
+  apellido    String
+  email       String    @unique
+  password    String
+  rol         String    @default("administrador")
+  creadoEn    DateTime  @default(now())
+
+  // Relaciones
+  novedades   Novedad[]
+  actividades Actividad[]
+  biblioteca  Libro[]
+  historia    Historia[]
+  multimedia  Multimedia[]
+}
+
+model Novedad {
+  id               Int       @id @default(autoincrement())
+  titulo           String
+  contenido        String
+  fechaPublicacion DateTime  @default(now())
+  imagenUrl        String?
+
+  // Relaciones
+  usuario   Usuario? @relation(fields: [usuarioId], references: [id])
+  usuarioId Int?
+}
+
+model Actividad {
+  id          Int       @id @default(autoincrement())
+  nombre      String
+  descripcion String?
+  fecha       DateTime?
+  tipo        String?   // "ballet", "idioma", "exposición"
+  lugar       String?
+
+  // Relaciones
+  usuario   Usuario? @relation(fields: [usuarioId], references: [id])
+  usuarioId Int?
+}
+
+
+model Historia {
+  id          Int       @id @default(autoincrement())
+  titulo      String
+  descripcion String?
+  fecha       DateTime?
+  archivoUrl  String?
+
+  // Relaciones
+  usuario   Usuario? @relation(fields: [usuarioId], references: [id])
+  usuarioId Int?
+}
+
+model Multimedia {
+  id             Int       @id @default(autoincrement())
+  tipo           String    // "imagen", "video", "audio", "pdf"
+  url            String
+  descripcion    String?
+  relacionadoCon String?   // "novedad", "actividad", "historia"
+  idRelacionado  Int?
+
+  // Relaciones
+  usuario   Usuario? @relation(fields: [usuarioId], references: [id])
+  usuarioId Int?
+}
+
+model Contacto {
+  id         Int       @id @default(autoincrement())
+  nombre     String
+  email      String
+  mensaje    String
+  fechaEnvio DateTime  @default(now())
+}
