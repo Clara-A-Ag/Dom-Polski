@@ -1,46 +1,37 @@
 // backend/index.js
-require('dotenv').config(); // Cargar variables de entorno al inicio
 
+// 1. Cargamos las variables de entorno para usar la configuración de la aplicación.
+require('dotenv').config();
+
+// 2. Importamos las librerías necesarias.
+// Express: El framework principal para el servidor.
+// Cors: Para permitir solicitudes desde el frontend.
 const express = require('express');
-const { PrismaClient } = require('@prisma/client');
-const cors = require('cors'); // Para permitir comunicación entre frontend y backend en diferentes puertos
+const cors = require('cors');
 
+// 3. Importamos el archivo de rutas para la página de inicio.
+// Esto separa la lógica de las rutas del archivo principal.
+const inicioRoutes = require('./src/routes/inicioRoutes');
+const historiaRoutes = require('./src/routes/historiaRoutes');
+
+// 4. Creamos la instancia de la aplicación Express.
 const app = express();
-const prisma = new PrismaClient();
-const PORT = process.env.PORT || 3000; // Puerto para el backend
 
-app.use(express.json()); // Para parsear JSON en las solicitudes
-app.use(cors()); // Habilitar CORS para que el frontend pueda conectarse
+// 5. Definimos el puerto del servidor.
+const PORT = process.env.PORT || 3000;
 
-// Ruta de prueba para obtener contenido de inicio
-app.get('/api/inicio', async (req, res) => {
-  try {
-    const contenido = await prisma.contenidoInicio.findMany();
-    res.json(contenido);
-  } catch (error) {
-    console.error('Error al obtener contenido de inicio:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
-  }
-});
+// 6. Configuración de middlewares.
+// express.json(): Permite que el servidor entienda datos JSON en las peticiones.
+// cors(): Habilita el Intercambio de Recursos de Origen Cruzado.
+app.use(express.json());
+app.use(cors());
 
-// Opcional: Ruta para insertar un dato de prueba
-app.post('/api/inicio', async (req, res) => {
-    try {
-        const { titulo, descripcion, imagenUrl } = req.body;
-        const nuevoContenido = await prisma.contenidoInicio.create({
-            data: {
-                titulo,
-                descripcion,
-                imagenUrl
-            }
-        });
-        res.status(201).json(nuevoContenido);
-    } catch (error) {
-        console.error('Error al crear contenido de inicio:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
-    }
-});
+// 7. Conectamos las rutas de la página de inicio a la aplicación.
+// Todas las rutas definidas en inicioRoutes.js ahora serán accesibles desde aquí.
+app.use(inicioRoutes);
+app.use(historiaRoutes);
 
+// 8. El servidor escucha en el puerto definido.
 app.listen(PORT, () => {
   console.log(`Backend corriendo en http://localhost:${PORT}`);
 });
