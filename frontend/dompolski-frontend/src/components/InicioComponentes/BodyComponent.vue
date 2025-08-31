@@ -3,7 +3,7 @@
     <div class="carousel-track" :style="trackStyle">
 <img v-for="(image, index) in images" :key="index" :src="image.src" :alt="image.alt"> //v-for itera sobre el arreglo de images para renderizar cada imagen.
     </div>
-<h1 class="carrusel-title">Dom Polski - Santa Fe</h1>
+
 </div>
 
 </template>
@@ -78,19 +78,5 @@ export default {
   flex-shrink: 0;
   object-fit: cover;
   
-}
-.carrusel-title{
-  position: absolute; /* Posicionamiento absoluto para colocar el título sobre las imágenes. */
-  top: 50%; /* Ajusta según sea necesario */
-  left: 50%;
-  transform: translateX(-50%);
-  color: #ffffff;
- text-shadow: 2px 2px 4px #c00606; /* Sombra para mejorar la legibilidad */
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-size: 24px;
-  font-weight: 900;
-  text-align: center;
-  z-index: 10; /* Asegura que el título esté por encima de las imágenes */
 }
 </style>
