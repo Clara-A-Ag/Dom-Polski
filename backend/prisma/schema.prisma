@@ -40,7 +40,6 @@ model Usuario {
   // Relaciones
   novedades   Novedad[]
   actividades Actividad[]
-  biblioteca  Libro[]
   historia    Historia[]
   multimedia  Multimedia[]
 }
