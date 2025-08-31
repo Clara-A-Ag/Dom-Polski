@@ -13,6 +13,8 @@ const cors = require('cors');
 // Esto separa la lógica de las rutas del archivo principal.
 const inicioRoutes = require('./src/routes/inicioRoutes');
 const historiaRoutes = require('./src/routes/historiaRoutes');
+const novedadesRoutes = require('./src/routes/novedadesRoutes');
+const usuarioRoutes = require('./src/routes/usuarioRoutes'); // Importamos las rutas de usuario
 
 // 4. Creamos la instancia de la aplicación Express.
 const app = express();
@@ -30,7 +32,8 @@ app.use(cors());
 // Todas las rutas definidas en inicioRoutes.js ahora serán accesibles desde aquí.
 app.use(inicioRoutes);
 app.use(historiaRoutes);
-
+app.use(novedadesRoutes);
+app.use(usuarioRoutes); // Usamos las rutas de usuario
 // 8. El servidor escucha en el puerto definido.
 app.listen(PORT, () => {
   console.log(`Backend corriendo en http://localhost:${PORT}`);
