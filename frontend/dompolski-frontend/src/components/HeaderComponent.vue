@@ -26,8 +26,7 @@ import { RouterLink } from 'vue-router';
 <style scoped>
 /* Estilos del encabezado principal */
 .main-header {
-  background-color: #aad7f7;
-  background-image: url('/imagenes/header2.png');
+  background-color: #ffffff;
   background-size: 350px;
   border-bottom: 1px solid #000000;
   padding: 0 2rem; 
@@ -68,8 +67,8 @@ import { RouterLink } from 'vue-router';
 }
 
 .nav-links a {
-  color: #ffffff;
-  text-shadow: #000000 1px 1px 2px;
+  color: #c00606;
+  text-shadow: #b7b4b4 1px 1px 2px;
   text-decoration: none;
   font-weight: bold;
   font-size: 20px;

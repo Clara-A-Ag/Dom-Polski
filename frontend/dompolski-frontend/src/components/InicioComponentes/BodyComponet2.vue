@@ -1,5 +1,8 @@
 <template>
 
+<div class="img">
+    <img src="/imagenes/polaquita1.png" alt="polaca" class="img-polaca">
+    
 <div class="Descripcion">
 <p class="bienvenidos">¡Bienvenidos a Dom Polski Santa Fe!</p> 
 <p>Somos una asociación civil sin fines de lucro que busca promover la cultura polaca en Argentina. Nuestro objetivo es preservar y difundir las 
@@ -10,13 +13,8 @@ las edades. Nuestro espacio está abierto a todos aquellos interesados en conoce
 <br>
 <a >Dirección: <a href="https://share.google/c6dt38SD54IBFe4TN" target="_blank" rel="noopener noreferrer">Av. Aristóbulo del Valle 5444, Santa Fe, Argentina, 3000</a></a>
 </div>
-<div class="img">
-    <img src="/imagenes/polaquita1.png" alt="polaca" class="img-polaca">
-    <img src="/imagenes/polaquito 1.png" alt="polaco" class="img-polaco">
-
+<img src="/imagenes/polaquito 1.png" alt="polaco" class="img-polaco">
 </div>
-
-
 
 </template>
 
@@ -36,6 +34,8 @@ text-align: center;
 padding-left: 5px;
 padding-right: 5px;
 padding-bottom: 15px;
+margin-left: 25px;
+margin-right: 25px;
 }
 a{
     color: #ee1c19; /* Cambia el color del enlace */
