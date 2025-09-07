@@ -1,11 +1,12 @@
 <template>
+<div>
 <div class="carousel-container">
     <div class="carousel-track" :style="trackStyle">
 <img v-for="(image, index) in images" :key="index" :src="image.src" :alt="image.alt"> //v-for itera sobre el arreglo de images para renderizar cada imagen.
     </div>
 
 </div>
-
+</div>
 </template>
 
 <script>
@@ -78,5 +79,8 @@ export default {
   flex-shrink: 0;
   object-fit: cover;
   
+}
+div{
+  background-color: #aad7f7;
 }
 </style>

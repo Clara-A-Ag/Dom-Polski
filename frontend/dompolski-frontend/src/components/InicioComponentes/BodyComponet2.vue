@@ -1,5 +1,5 @@
 <template>
-
+<div>
 <div class="img">
     <img src="/imagenes/polaquita1.png" alt="polaca" class="img-polaca">
     
@@ -11,11 +11,11 @@ tradiciones, costumbres y valores de la comunidad polaca en Santa Fe y sus alred
 las edades. Nuestro espacio está abierto a todos aquellos interesados en conocer más sobre la rica herencia cultural polaca.</p>
 <p>¡Únete a nosotros y descubre la magia de la cultura polaca en Santa Fe!</p>
 <br>
-<a >Dirección: <a href="https://share.google/c6dt38SD54IBFe4TN" target="_blank" rel="noopener noreferrer">Av. Aristóbulo del Valle 5444, Santa Fe, Argentina, 3000</a></a>
+<a class="direccion">Dirección: <a href="https://share.google/c6dt38SD54IBFe4TN" target="_blank" rel="noopener noreferrer" class="direccion">Av. Aristóbulo del Valle 5444, Santa Fe, Argentina, 3000</a></a>
 </div>
 <img src="/imagenes/polaquito 1.png" alt="polaco" class="img-polaco">
 </div>
-
+</div>
 </template>
 
 <script>
@@ -25,7 +25,7 @@ las edades. Nuestro espacio está abierto a todos aquellos interesados en conoce
 
 <style scoped>
 .Descripcion {
-background-color: #aad7f7;
+background-color: #bddef6;
 font-style: 'lora', serif;
 font-weight: solid;
 color:rgb(51, 6, 6);
@@ -36,6 +36,12 @@ padding-right: 5px;
 padding-bottom: 15px;
 margin-left: 25px;
 margin-right: 25px;
+border: 2px solid #2340ce;
+border-radius: 25px;
+}
+.direccion{
+    display: center;
+    justify-content: center;
 }
 a{
     color: #ee1c19; /* Cambia el color del enlace */
@@ -49,9 +55,13 @@ font-size: 20px;
 font-weight: bold;
 color:#ee1c19;
 }
+div{
+padding-top: 5px;
+padding-bottom: 5px;
+}
 .img{
     display: flex;
-background-color: #aad7f7;
+background-color: #bddef6;
 justify-content: space-between; /* Distribuye el espacio entre los elementos */
 align-items: center; /* Alinea verticalmente los elementos al centro (opcional) */
     

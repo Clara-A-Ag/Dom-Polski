@@ -79,29 +79,34 @@ img{
 }
 .redes-sociales { /*dar estilo a los logos*/
     display: flex;
-    gap: 1rem;
+    gap: 10px;
     list-style: none;
     padding: 0;
-    flex-direction: column; /* Cambia a columna para apilar los logos verticalmente */
+    flex-direction: row; /* Cambia a columna para apilar los logos verticalmente */
     justify-content: center; /* Centra los logos verticalmente */
     align-items: center;    /* esto es para centrar los elementos horizontalmente */
     background-color: #efedd6;
     width: 100%;
-    height: 600px;
+    height: 500px;
 }
 .redes-sociales li {
-    margin: 10px 0; /* Espacio entre los logos */
+    margin: 15px; 
 }
 a{
-    margin-right: 20px;
-    color:#7b1010; /* Cambia el color del texto */
+    display: flex; /* Convierte el enlace en un contenedor flexbox */
+    align-items: center; /* Centra el texto y el logo verticalmente dentro del enlace */
+    gap: 5px; /* Pequeño espacio entre el texto y el logo */
+    color: #7b1010;
     text-transform: uppercase;
-
+    text-decoration: none; /* Opcional: para quitar el subrayado */
+    font-size: 16px; /* Opcional: para un mejor control del tamaño del texto */
 }
+
 .redes-sociales li a svg {
     fill:#7b1010; /* Cambia el color del logo */
     width: 40px;
     height: 40px;
+    margin-bottom: 15px;
     transition: transform 0.3s ease;
 }
 
