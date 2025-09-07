@@ -22,8 +22,8 @@ app.post("/enviar", async (req, res) => {
   const { tipo, nombre, email, mensaje } = req.body;
 
   const correos = {
-    oficial: "tu_gmail_oficial@gmail.com",
-    artistico: "tu_gmail_artistico@gmail.com"
+    oficial: "dompolski.santafe@gmail.com",
+    artistico: "audiovisualesdomp@gmail.com"
   };
 
   try {
