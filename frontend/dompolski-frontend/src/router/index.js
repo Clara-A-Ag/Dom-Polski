@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import InicioVista from '../views/InicioVista.vue'
 import ContactoVista from '../views/ContactoVista.vue'  
+import Historia from '../views/NuestraHistoriaVista.vue'
+import Actividades from '../views/ActividadesVista.vue'
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
+const routes =[
     {
       path: '/',
       name: 'Inicio',
@@ -14,10 +14,22 @@ const router = createRouter({
       path: '/contacto',
       name: 'Contacto',
       component: ContactoVista,
+    },
+    {
+      path: '/nuestrahistoria',
+      name: 'Nuestra Historia',
+      component: Historia
+    },
+    {
+      path: '/actividades', // La URL para esta vista
+      name: 'Actividades',
+      component: Actividades // El componente que se cargará
     }
-    
-  ],
+  ];
 
-})
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
 
-export default router
+export default router;
