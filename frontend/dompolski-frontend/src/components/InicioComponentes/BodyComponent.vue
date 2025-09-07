@@ -83,8 +83,6 @@ export default {
   margin: 0 auto;
   overflow: hidden;
   position: relative;
-  scroll-snap-align: start; /* encaje al inicio */
-  flex-shrink: 0; /* evita que se encoja */
 }
 
 .carousel-track {
@@ -147,6 +145,23 @@ export default {
   }
   .welcome-text p {
     font-size: 1.2rem;
+  }
+}
+
+/* Ajustes para pantallas con poca altura (ej. netbooks) */
+@media (max-height: 800px) {
+  .carousel-container {
+    height: auto !important; /* deja que crezca según contenido */
+  }
+  .carousel-slide img {
+    height: auto;
+    max-height: 70vh; /* no más del 70% de la pantalla */
+  }
+  .welcome-text h1 {
+    font-size: 2.2rem;
+  }
+  .welcome-text p {
+    font-size: 1rem;
   }
 }
 </style>

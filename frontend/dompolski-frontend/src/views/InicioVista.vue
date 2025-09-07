@@ -1,5 +1,5 @@
 <template>
-<div class="page-container">
+<div>
 <BodyComponent></BodyComponent>
 <BodyComponent2></BodyComponent2>
 </div>
@@ -68,12 +68,6 @@ setup() {
 </script>
 
 <style scoped>
-.page-container {
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory; /* activa el snap vertical */
-  scroll-behavior: smooth;
-}
 
 
 

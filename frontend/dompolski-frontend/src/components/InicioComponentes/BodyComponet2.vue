@@ -99,8 +99,6 @@ export default {
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  scroll-snap-align: start; /* encaje al inicio */
-  flex-shrink: 0; /* evita que se encoja */
 }
 
 .content {
@@ -204,6 +202,25 @@ a:hover {
   .img-polaca,
   .img-polaco {
     width: 180px;
+  }
+}
+
+/* Ajustes para pantallas con poca altura (ej. netbooks) */
+@media (max-height: 800px) {
+  .info-container {
+    height: auto !important; /* deja que crezca según contenido */
+    padding: 20px;
+  }
+  .descripcion {
+    font-size: 1.1rem;
+    padding: 20px;
+  }
+  .bienvenidos {
+    font-size: 1.8rem;
+  }
+  .img-polaca,
+  .img-polaco {
+    width: 200px;
   }
 }
 </style>
