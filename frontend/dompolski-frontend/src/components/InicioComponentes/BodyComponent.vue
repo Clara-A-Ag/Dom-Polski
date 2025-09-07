@@ -81,6 +81,6 @@ export default {
   
 }
 div{
-  background-color: #aad7f7;
+  background-color: #efedd6;
 }
 </style>

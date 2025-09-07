@@ -25,7 +25,7 @@ las edades. Nuestro espacio está abierto a todos aquellos interesados en conoce
 
 <style scoped>
 .Descripcion {
-background-color: #bddef6;
+background-color: #efedd6;
 font-style: 'lora', serif;
 font-weight: solid;
 color:rgb(51, 6, 6);
@@ -36,7 +36,7 @@ padding-right: 5px;
 padding-bottom: 15px;
 margin-left: 25px;
 margin-right: 25px;
-border: 2px solid #2340ce;
+border: 2px solid #ce2323;
 border-radius: 25px;
 }
 .direccion{
@@ -61,7 +61,7 @@ padding-bottom: 5px;
 }
 .img{
     display: flex;
-background-color: #bddef6;
+background-color: #efedd6;
 justify-content: space-between; /* Distribuye el espacio entre los elementos */
 align-items: center; /* Alinea verticalmente los elementos al centro (opcional) */
     
