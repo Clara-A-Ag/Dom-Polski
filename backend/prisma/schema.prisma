@@ -1,22 +1,14 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-// prisma/schema.prisma
-//generador prisma
 generator client {
   provider = "prisma-client-js"
 }
-//coneccion a postgresSQL
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model ContenidoInicio {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   titulo      String
   descripcion String?
   imagenUrl   String?
@@ -24,36 +16,28 @@ model ContenidoInicio {
   updatedAt   DateTime @updatedAt
 }
 
-// ========================
-// MODELOS
-// ========================
-
 model Usuario {
-  id          Int       @id @default(autoincrement())
+  id          Int          @id @default(autoincrement())
   nombre      String
   apellido    String
-  email       String    @unique
+  email       String       @unique
   password    String
-  rol         String    @default("administrador")
-  creadoEn    DateTime  @default(now())
-
-  // Relaciones
-  novedades   Novedad[]
+  rol         String       @default("administrador")
+  creadoEn    DateTime     @default(now())
   actividades Actividad[]
   historia    Historia[]
   multimedia  Multimedia[]
+  novedades   Novedad[]
 }
 
 model Novedad {
-  id               Int       @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   titulo           String
   contenido        String
-  fechaPublicacion DateTime  @default(now())
+  fechaPublicacion DateTime @default(now())
   imagenUrl        String?
-
-  // Relaciones
-  usuario   Usuario? @relation(fields: [usuarioId], references: [id])
-  usuarioId Int?
+  usuarioId        Int?
+  usuario          Usuario? @relation(fields: [usuarioId], references: [id])
 }
 
 model Actividad {
@@ -61,14 +45,11 @@ model Actividad {
   nombre      String
   descripcion String?
   fecha       DateTime?
-  tipo        String?   // "ballet", "idioma", "exposición"
+  tipo        String?
   lugar       String?
-
-  // Relaciones
-  usuario   Usuario? @relation(fields: [usuarioId], references: [id])
-  usuarioId Int?
+  usuarioId   Int?
+  usuario     Usuario?  @relation(fields: [usuarioId], references: [id])
 }
-
 
 model Historia {
   id          Int       @id @default(autoincrement())
@@ -76,29 +57,25 @@ model Historia {
   descripcion String?
   fecha       DateTime?
   archivoUrl  String?
-
-  // Relaciones
-  usuario   Usuario? @relation(fields: [usuarioId], references: [id])
-  usuarioId Int?
+  usuarioId   Int?
+  usuario     Usuario?  @relation(fields: [usuarioId], references: [id])
 }
 
 model Multimedia {
-  id             Int       @id @default(autoincrement())
-  tipo           String    // "imagen", "video", "audio", "pdf"
+  id             Int      @id @default(autoincrement())
+  tipo           String
   url            String
   descripcion    String?
-  relacionadoCon String?   // "novedad", "actividad", "historia"
+  relacionadoCon String?
   idRelacionado  Int?
-
-  // Relaciones
-  usuario   Usuario? @relation(fields: [usuarioId], references: [id])
-  usuarioId Int?
+  usuarioId      Int?
+  usuario        Usuario? @relation(fields: [usuarioId], references: [id])
 }
 
 model Contacto {
-  id         Int       @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   nombre     String
   email      String
   mensaje    String
-  fechaEnvio DateTime  @default(now())
+  fechaEnvio DateTime @default(now())
 }

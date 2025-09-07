@@ -1,4 +1,7 @@
 <template>
+    
+<div class="img2">
+    <img src="/imagenes/polaquitos 3.png" alt="polaco" class="img-polaco2">
     <div>
 <ul class="redes-sociales">
             <li>
@@ -36,8 +39,8 @@
             </li>
         </ul>
     </div>
-    
-
+    <img src="/imagenes/polaquitos 4.png" alt="polaca" class="img-polaca2">
+</div>
 
 </template>
 
@@ -50,6 +53,30 @@
 </script>
 
 <style>
+.img2{
+    display: flex;
+background-color: #efedd6;
+justify-content: space-between; /* Distribuye el espacio entre los elementos */
+align-items: center; /* Alinea verticalmente los elementos al centro (opcional) */
+    
+}
+img{
+    width: 150px;
+    height: 250px;
+    margin: 1px;
+    display: flex; /* Convierte el contenedor en un flex container */
+
+}
+.img-polaco2{
+    justify-content: left;
+    align-items: left;
+    padding-left: 25px;
+}
+.img-polaca2{
+    justify-content: right;
+    align-items: right;
+    padding-right: 25px;
+}
 .redes-sociales { /*dar estilo a los logos*/
     display: flex;
     gap: 1rem;
@@ -58,7 +85,7 @@
     flex-direction: column; /* Cambia a columna para apilar los logos verticalmente */
     justify-content: center; /* Centra los logos verticalmente */
     align-items: center;    /* esto es para centrar los elementos horizontalmente */
-    background-color: #aad7f7;
+    background-color: #efedd6;
     width: 100%;
     height: 600px;
 }
@@ -67,11 +94,12 @@
 }
 a{
     margin-right: 20px;
-    color:#14249d; /* Cambia el color del texto */
+    color:#7b1010; /* Cambia el color del texto */
+    text-transform: uppercase;
 
 }
 .redes-sociales li a svg {
-    fill:#14249d; /* Cambia el color del logo */
+    fill:#7b1010; /* Cambia el color del logo */
     width: 40px;
     height: 40px;
     transition: transform 0.3s ease;
