@@ -117,5 +117,27 @@ import { RouterLink } from 'vue-router';
     width: 80px;
   }
 }
+
+/* Ajustes para pantallas de netbook o baja altura */
+@media (max-height: 800px) {
+  .main-header {
+    height: 90px; /* un poco más bajo */
+    padding: 0 1rem;
+  }
+
+  .logo-image {
+    width: 80px; /* logo más chico */
+  }
+
+  .nav-links a {
+    font-size: 1.2rem; /* texto más compacto */
+    padding: 0.3rem 0;
+  }
+
+  .header-nav {
+    gap: 1rem; /* menos espacio entre logo y links */
+  }
+}
+
 </style>
 
