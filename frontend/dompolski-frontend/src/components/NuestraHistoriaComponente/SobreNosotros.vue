@@ -25,7 +25,7 @@ export default {
 
 <style scoped>
 .section {
-  background-color: #d1d1d1;
+  background-color: #fffffe;
   padding: 40px 20px;
   text-align: center;
 }
@@ -34,7 +34,7 @@ export default {
   font-size: 2.5em;
   color: #333;
   margin-bottom: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'ubuntu', sans-serif;
   border-bottom: 3px solid #9d1414;
   display: inline-block;
   padding-bottom: 5px;
@@ -54,6 +54,7 @@ export default {
   line-height: 1.6;
   color: #555;
   text-align: left;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 .image-grid {
