@@ -31,7 +31,7 @@ export default {
   font-size: 2.5em;
   color: #333;
   margin-bottom: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'ubuntu', sans-serif;
   border-bottom: 3px solid #9d1414;
   display: inline-block;
   padding-bottom: 5px;
@@ -44,6 +44,7 @@ export default {
 
 .text {
   font-size: 1.2em;
+  font-family: 'ubuntu', sans-serif;
   line-height: 1.6;
   color: #555;
   margin-bottom: 30px;
