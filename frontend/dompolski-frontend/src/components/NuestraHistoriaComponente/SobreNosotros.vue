@@ -7,7 +7,7 @@
         A través de los años, nuestra misión ha sido transmitida por cuatro generaciones. Trabajamos para mantener vivo el legado de nuestros fundadores: estrechar los vínculos sociales, culturales, mutuos y deportivos entre los polacos residentes o visitantes, sus descendientes y, por supuesto, los argentinos. Nos esforzamos por transmitir de generación en generación nuestras costumbres, la importancia del trabajo en grupo, la comunión entre pares y la tolerancia, promoviendo siempre la integración con otras culturas.
       </p>
       <div class="image-grid">
-        <img src="/imagenes/logo dp mas.png" alt="Foto histórica de la comunidad polaca" class="grid-img">
+        <img src="/imagenes/dompofrente.JPG" alt="Foto histórica de la comunidad polaca" class="grid-img">
         <div class="small-images">
           <img src="/imagenes/bandargentina.jpg" alt="Foto de la comunidad moderna" class="small-img">
           <img src="/imagenes/LogoDom.png" alt="Logo de Dom Polski" class="small-img">

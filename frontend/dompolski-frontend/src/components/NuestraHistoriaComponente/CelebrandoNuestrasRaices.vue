@@ -6,8 +6,8 @@
         Desde hace 30 años, participamos anualmente en la Fiesta de las Colectividades de nuestra ciudad. En este evento, compartimos nuestra rica cultura a través de nuestro grupo de baile folclórico "Águila Blanca", exposiciones sobre nuestra historia y tradiciones, y talleres de arte polaco. También deleitamos a los visitantes con degustaciones de nuestra tradicional cocina polaca.
       </p>
       <div class="image-gallery">
-        <img src="/imagenes/bandargentina.jpg" alt="Baile folclórico en un escenario" class="gallery-img">
-        <img src="/imagenes/dompofrente.JPG" alt="Grupo de baile folclórico 'Águila Blanca' bailando" class="gallery-img">
+        <img src="/imagenes/IMG1.jpg" alt="Baile folclórico en un escenario" class="gallery-img">
+        <img src="/imagenes/IMG2.jpg" alt="Grupo de baile folclórico 'Águila Blanca' bailando" class="gallery-img">
         <img src="/imagenes/header2.png" alt="Bailarinas de 'Águila Blanca' en escena" class="gallery-img">
       </div>
     </div>
@@ -22,7 +22,7 @@ export default {
 
 <style scoped>
 .section {
-  background-color: #d1d1d1;
+  background-color: #efedd6;
   padding: 40px 20px;
   text-align: center;
 }
