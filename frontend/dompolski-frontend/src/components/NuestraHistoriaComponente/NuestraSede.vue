@@ -59,7 +59,7 @@ export default {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 20px;/* Espacio entre imagenes */
 }
 
 .grid-img {
