@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h2>Nuestra Historia</h2>
-    <p>Aquí va el texto y las fotos que describen la historia de la institución...</p>
+    <h1 class="title">Nuestros Miembros</h1>
 
     <hr> <h2>Comisión Directiva</h2>
     <div class="members-grid">
