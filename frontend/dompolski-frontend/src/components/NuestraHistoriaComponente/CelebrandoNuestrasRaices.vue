@@ -56,7 +56,11 @@ export default {
 }
 
 .gallery-img {
-  width: 30%;
+  width: 100%;
+  max-width: 100%;   /* Asegura que no crezcan más allá de su tamaño original */
+  height: 200px;     /* O define una altura mínima si quieres mantener consistencia visual */
+  object-fit: cover; /* Recorta para llenar el espacio sin deformar */
+
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;

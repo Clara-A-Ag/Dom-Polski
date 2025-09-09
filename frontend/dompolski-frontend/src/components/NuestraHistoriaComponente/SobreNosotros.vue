@@ -61,11 +61,14 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .grid-img {
   width: 100%;
+  max-width: 100%;   /* Asegura que no crezcan más allá de su tamaño original */
+  height: 200px;     /* O define una altura mínima si quieres mantener consistencia visual */
+  object-fit: cover; /* Recorta para llenar el espacio sin deformar */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
