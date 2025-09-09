@@ -9,7 +9,7 @@
 <script setup>
 // Definimos la propiedad "miembro" que este componente espera recibir.
 // Es un objeto que debe contener las propiedades que vamos a mostrar.
-const props = defineProps({
+defineProps({
   miembro: {
     type: Object,
     required: true,
