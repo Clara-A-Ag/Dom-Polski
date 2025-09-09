@@ -3,6 +3,7 @@
     <SobreNosotros />
     <CelebrandoNuestrasRaices />
     <NuestraSede />
+    <NuestosMiembros />
   </div>
 </template>
 
@@ -10,17 +11,18 @@
 import SobreNosotros from '@/components/NuestraHistoriaComponente/SobreNosotros.vue';
 import CelebrandoNuestrasRaices from '@/components/NuestraHistoriaComponente/CelebrandoNuestrasRaices.vue';
 import NuestraSede from '@/components/NuestraHistoriaComponente/NuestraSede.vue';
-
+import NuestosMiembros from '@/components/NuestraHistoriaComponente/NuestosMiembros.vue'; 
 export default {
   name: 'NuestraHistoria',
   components: {
     SobreNosotros,
     CelebrandoNuestrasRaices,
-    NuestraSede
+    NuestraSede,
+    NuestosMiembros
   }
 };
 </script>
 
 <style scoped>
-/* Estilos específicos para esta vista si los necesitas */
+
 </style>
