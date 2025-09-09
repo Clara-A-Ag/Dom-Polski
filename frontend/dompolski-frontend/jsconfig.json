@@ -3,6 +3,10 @@
     "paths": {
       "@/*": ["./src/*"]
     }
+    // ...otras opciones...
   },
-  "exclude": ["node_modules", "dist", "src/views/AboutView.vue", "src/views/HomeView.vue"]
+  "exclude": ["node_modules", "dist", "src/views/AboutView.vue", "src/views/HomeView.vue"],
+  "vueCompilerOptions": {
+    "globalTypesPath": "./node_modules/vue/dist/ts-global.d.ts"
+  }
 }
