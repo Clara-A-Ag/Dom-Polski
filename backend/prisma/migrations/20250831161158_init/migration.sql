@@ -71,7 +71,16 @@ CREATE TABLE "Contacto" (
 
     CONSTRAINT "Contacto_pkey" PRIMARY KEY ("id")
 );
+CREATE Table "Miembro" (
+    "id" SERIAL NOT NULL,
+    "nombre" TEXT NOT NULL,
+    "cargo" TEXT NOT NULL,
+    "grupo" TEXT NOT NULL,
+    "fotoUrl" TEXT NOT NULL,
+    "orden" INTEGER DEFAULT 1,
 
+    CONSTRAINT "Miembro_pkey" PRIMARY KEY ("id")
+);
 -- CreateIndex
 CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
 
