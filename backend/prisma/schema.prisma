@@ -79,12 +79,12 @@ model Contacto {
   mensaje    String
   fechaEnvio DateTime @default(now())
 }
-
 model Miembro {
   id        Int      @id @default(autoincrement())
   nombre    String
+  apellido  String
   cargo     String
   grupo     String
-  fotoUrl   String
-  orden     Int?     @default(1)
+  fotoUrl   String?
+  orden     Int?
 }

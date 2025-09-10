@@ -3,11 +3,36 @@
     <h1>Panel de Administración de Miembros</h1>
     
     <form @submit.prevent="submitForm" class="form-miembro">
-      <button type="submit">{{ editandoMiembro ? 'Guardar Cambios' : 'Agregar Miembro' }}</button>
+   <div class="form-group">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" v-model="form.nombre" required />
+   </div>
+    <div class="form-group">
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" v-model="form.apellido" required />
+   </div>
+   <div class="form-group">
+    <label for="cargo">Cargo:</label>
+    <input type="text" id="cargo" v-model="form.cargo" required />
+   </div>
+   <div class="form-group">
+    <label for="grupo">Grupo:</label>
+    <input type="text" id="grupo" v-model="form.grupo" required>
+   </div>
+    <div class="form-group">
+    <label for="orden">Orden:</label>
+    <input type="number" id="orden" v-model.number="form.orden">
+    </div>
+    <div class="form-group">
+    <label for="foto">Foto:</label>
+    <input type="file" id="foto" @change="handleFileUpload" :required="!editandoMiembro">
+    </div>
+    <button type="submit">{{ editandoMiembro ? 'Guardar Cambios' : 'Agregar Miembro' }}</button>
+    <button v-if="editandoMiembro" @click="resetForm" type="button">Cancelar Edición</button>
     </form>
     
     <table>
-      <thead>
+      <thead> <!-- Encabezados de la tabla -->
         <tr>
           <th>Nombre</th>
           <th>Grupo</th>
@@ -39,9 +64,11 @@ const fotoFile = ref(null);
 
 const form = ref({
   nombre: '',
+  apellido: '',
   cargo: '',
   grupo: '',
-  orden: null
+  orden: null,
+  fotoUrl: ''
 });
 
 // Lógica de Supabase Storage
@@ -54,7 +81,7 @@ const uploadPhoto = async () => {
 
   const fileName = `${uuidv4()}-${fotoFile.value.name}`;
   const { data, error } = await supabase.storage
-    .from('fotos-miembros') // Nombre de tu bucket en Supabase
+    .from('fotos-miembros') // Nombre del bucket en Supabase
     .upload(fileName, fotoFile.value);
 
   if (error) {
@@ -82,10 +109,15 @@ const fetchMiembros = async () => {
 
 const submitForm = async () => {
   // 1. Subir la foto a Supabase Storage
-  const fotoUrl = await uploadPhoto();
-  if (!fotoUrl) {
-    console.error('No se pudo subir la foto.');
-    return;
+  let fotoUrl = editandoMiembro.value ? editandoMiembro.value.fotoUrl : null;
+  if (fotoFile.value) {
+    const nuevaFotoUrl = await uploadPhoto();
+    if (nuevaFotoUrl) {
+      fotoUrl = nuevaFotoUrl;
+    } else {
+      console.error('No se pudo subir la foto.');
+      return;
+    }
   }
 
   // 2. Enviar los datos del miembro a tu API de Node.js
@@ -111,7 +143,14 @@ const submitForm = async () => {
 
 const editar = (miembro) => {
   editandoMiembro.value = miembro;
-  form.value = { ...miembro };
+  form.value = { 
+    nombre: miembro.nombre,
+    apellido: miembro.apellido,
+    cargo: miembro.cargo,
+    grupo: miembro.grupo,
+    orden: miembro.orden,
+  };
+  fotoFile.value = null; // Resetear el archivo de foto
 };
 
 const eliminar = async (id) => {
@@ -122,7 +161,7 @@ const eliminar = async (id) => {
 };
 
 const resetForm = () => {
-  form.value = { nombre: '', cargo: '', grupo: '', orden: null };
+  form.value = { nombre: '', apellido:'', cargo: '', grupo: '', orden: null };
   editandoMiembro.value = null;
   fotoFile.value = null;
 };

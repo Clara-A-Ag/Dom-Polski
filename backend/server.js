@@ -78,10 +78,10 @@ app.get('/api/miembros', async (req, res) => {
 
 // 2. AGREGAR UN NUEVO MIEMBRO
 app.post('/api/miembros', async (req, res) => {
-  const { nombre, cargo, grupo, fotoUrl, orden } = req.body;
+  const { nombre, apellido, cargo, grupo, fotoUrl, orden } = req.body;
   try {
     const nuevoMiembro = await prisma.miembro.create({
-      data: { nombre, cargo, grupo, fotoUrl, orden },
+      data: { nombre, apellido, cargo, grupo, fotoUrl, orden },
     });
     res.status(201).json(nuevoMiembro);
   } catch (error) {
@@ -92,11 +92,11 @@ app.post('/api/miembros', async (req, res) => {
 // 3. ACTUALIZAR UN MIEMBRO
 app.put('/api/miembros/:id', async (req, res) => {
   const { id } = req.params;
-  const { nombre, cargo, grupo, fotoUrl, orden } = req.body;
+  const { nombre, apellido, cargo, grupo, fotoUrl, orden } = req.body;
   try {
     const miembroActualizado = await prisma.miembro.update({
       where: { id: parseInt(id) },
-      data: { nombre, cargo, grupo, fotoUrl, orden },
+      data: { nombre, apellido, cargo, grupo, fotoUrl, orden },
     });
     res.json(miembroActualizado);
   } catch (error) {
