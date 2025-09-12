@@ -2,8 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "types": ["node"]
+    }
   },
   "exclude": ["node_modules", "dist", "src/views/AboutView.vue", "src/views/HomeView.vue"],
   "vueCompilerOptions": {
