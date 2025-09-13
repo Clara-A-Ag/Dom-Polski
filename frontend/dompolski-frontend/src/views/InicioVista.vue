@@ -14,7 +14,7 @@ import { ref, onMounted } from 'vue';
 // Importamos Axios para hacer las peticiones HTTP
 import axios from 'axios';
 import BodyComponent from '@/components/InicioComponentes/BodyComponent.vue';
-import BodyComponent2 from '@/components/InicioComponentes/BodyComponet2.vue';
+import BodyComponent2 from '@/components/InicioComponentes/BodyComponent2.vue';
 
 export default{
     name: 'InicioVista',
