@@ -37,7 +37,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import MiembroCard from '@/components/MiembroCard.vue';
+import MiembroCard from '@/components/NuestraHistoriaComponente/MiembroCard.vue';
 import { getMiembros } from '@/services/api.js';
 
 const comisionDirectiva = ref([]);
