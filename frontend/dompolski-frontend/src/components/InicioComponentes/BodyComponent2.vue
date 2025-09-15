@@ -28,14 +28,8 @@
           Fe!
         </p>
         <p class="direccion">
-          Dirección:
-          <a
-            href="https://share.google/c6dt38SD54IBFe4TN"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Av. Aristóbulo del Valle 5444, Santa Fe, Argentina, 3000
-          </a>
+          Dirección: 
+          <a class="direccion" href="https://share.google/c6dt38SD54IBFe4TN" target="_blank" rel="noopener noreferrer">  Av. Aristóbulo del Valle 5444, Santa Fe, Argentina, 3000</a>
         </p>
       </div>
 
@@ -138,17 +132,25 @@ export default {
 
 .direccion {
   font-weight: bold;
+  text-align: center;
+   display: flex;
+ align-items: center;
+ justify-content: center;
 }
-
+.direccion a{
+  text-align: center;
+}
 a {
   color: #ee1c19;
   text-decoration: none;
   transition: color 0.3s ease;
+  text-align: center;
 }
 
 a:hover {
   text-decoration: underline;
   color: #b51210;
+  text-align: center;
 }
 
 .img-polaca,
