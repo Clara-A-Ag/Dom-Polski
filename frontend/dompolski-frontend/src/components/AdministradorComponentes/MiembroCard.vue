@@ -32,7 +32,7 @@ defineProps({
 .member-photo {
   width: 150px;
   height: 150px;
-  border-radius: 50%;
+  border-radius: 15px;
   object-fit: cover;
   margin-bottom: 15px;
   border: 2px solid #ddd;

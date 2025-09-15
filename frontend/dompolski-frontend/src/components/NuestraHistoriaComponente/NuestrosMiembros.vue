@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bodymiembro">
     <h1 class="title">Nuestros Miembros</h1>
 
     <div v-if="loading">Cargando miembros...</div>
@@ -14,7 +14,7 @@
         />
       </div>
 
-      <h2 style="margin-top: 40px;">Audiovisuales</h2>
+      <h2>Audiovisuales</h2>
       <div class="members-grid">
         <MiembroCard
           v-for="miembro in audiovisuales"
@@ -23,7 +23,7 @@
         />
       </div>
 
-      <h2 style="margin-top: 40px;">Ballet</h2>
+      <h2>Ballet</h2>
       <div class="members-grid">
         <MiembroCard
           v-for="miembro in ballet"
@@ -37,7 +37,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import MiembroCard from '@/components/NuestraHistoriaComponente/MiembroCard.vue';
+import MiembroCard from '@/components/AdministradorComponentes/MiembroCard.vue';
 import { getMiembros } from '@/services/api.js';
 
 const comisionDirectiva = ref([]);
@@ -62,6 +62,25 @@ onMounted(fetchMiembros);
 </script>
 
 <style scoped>
+.bodymiembro{
+  background-color: #efedd6;
+}
+h1{
+  align-items: center;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  font-family: 'ubuntu';
+  color:#333;
+
+}
+h2{
+  margin-top: 40px;
+  font-family: 'ubuntu';
+  color:#555;
+  text-align: center;
+
+}
 .members-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -69,8 +88,4 @@ onMounted(fetchMiembros);
   justify-items: center;
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 25px;
-}
 </style>
