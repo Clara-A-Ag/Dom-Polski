@@ -68,7 +68,7 @@ export default {
 
 <style scoped>
 body {
-    background-color: #ecbfd5;
+    background-color: #ffefef;
     /* Usa flexbox para centrar todo el contenido del body */
     display: flex;
     justify-content: center; /* Centra horizontalmente */

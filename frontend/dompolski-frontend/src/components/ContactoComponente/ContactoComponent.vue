@@ -55,7 +55,7 @@
 <style>
 .img2{
     display: flex;
-background-color: #efedd6;
+background-color: #f2efff;
 justify-content: space-between; /* Distribuye el espacio entre los elementos */
 align-items: center; /* Alinea verticalmente los elementos al centro (opcional) */
     
@@ -85,7 +85,6 @@ img{
     flex-direction: row; /* Cambia a columna para apilar los logos verticalmente */
     justify-content: center; /* Centra los logos verticalmente */
     align-items: center;    /* esto es para centrar los elementos horizontalmente */
-    background-color: #efedd6;
     width: 100%;
     height: 500px;
 }
