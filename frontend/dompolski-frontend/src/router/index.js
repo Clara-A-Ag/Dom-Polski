@@ -3,6 +3,7 @@ import InicioVista from '../views/InicioVista.vue'
 import ContactoVista from '../views/ContactoVista.vue'  
 import Historia from '../views/NuestraHistoriaVista.vue'
 import Actividades from '../views/ActividadesVista.vue'
+import Novedades from '../views/NovedadesVista.vue'
 
 const routes =[
     {
@@ -24,6 +25,11 @@ const routes =[
       path: '/actividades', // La URL para esta vista
       name: 'Actividades',
       component: Actividades // El componente que se cargará
+    },
+    {
+      path: '/novedades',
+      name: 'Novedades',
+      component: Novedades
     }
   ];
 
