@@ -1,5 +1,6 @@
 <template>
   <section class="section">
+    <div class="sidebar-wrapper">
     <h2 class="title">Secciones</h2>
     
     <div class="sidebar"> 
@@ -29,7 +30,7 @@
 
       </ul>
     </div>
-    
+    </div>
     <div class="content">
       <Idioma v-if="activeTab === 'idioma'" id="idioma" />
       <Ballet v-if="activeTab === 'ballet'" id="ballet" />
@@ -70,7 +71,7 @@ export default {
    2. Maquetación Principal y Fuente
    -------------------- */
 .section {
- background-color: #efedd6;
+
     font-family: 'Ubuntu', sans-serif; 
     display:block;
     position: relative;
@@ -78,7 +79,6 @@ export default {
     /* Asegura que la sección de actividades tenga una altura mínima */
     min-height: auto; 
     padding: 0 var(--padding-contenido); /* Padding horizontal, 0 vertical */
-    padding-left: var(--padding-contenido);
 
 }
 .title {
@@ -96,13 +96,16 @@ export default {
 /* --------------------
    3. Estilos del Menú Lateral (.sidebar)
    -------------------- */
-.sidebar {
-    width: 200px; 
-    background-color: #efedd6; 
-    padding: var(--padding-contenido) 0; /* Padding vertical, 0 horizontal */
-    margin-right: var(--espacio-separacion); /* Espacio de separación del contenido */
+   .sidebar {
+    /* CLAVE: Cambiamos de width fijo a min-content, que usa el ancho mínimo necesario
+              para mostrar todo el contenido. */
+    width: min-content; 
+    min-width: 150px; /* Ancho mínimo para que se vea bien, ajusta si es necesario */ 
+    padding: var(--padding-contenido) 0; 
+    margin-right: var(--espacio-separacion); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
     border-radius: var(--borde-radio);
+    
     height: auto;
 }
 
@@ -128,7 +131,7 @@ export default {
     text-decoration: none;
     color: var(--color-texto);
     font-size: 1.1rem;
-    padding: 0 1rem;
+    padding: 0 0.8rem;
     text-transform: capitalize; /* SOLO la primera letra en mayúscula */
     font-weight: 500; 
 }
@@ -140,7 +143,7 @@ export default {
     font-size: 1.5rem;
     color: #a0a0a0; 
     order: -1; /* Mueve el ícono a la izquierda */
-    margin-right: 0.75rem; 
+    margin-right: 0.6rem; 
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
@@ -155,7 +158,7 @@ export default {
 /* BARRA LATERAL ROJA */
 .sidebar__item.is-active a {
     border-left: 5px solid var(--color-primario); 
-    padding-left: calc(1rem - 5px); 
+    padding-left: calc(0.8rem - 5px); 
     color: var(--color-texto);
 }
 
