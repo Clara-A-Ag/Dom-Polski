@@ -60,7 +60,7 @@ export default {
     /* CLAVE: Esto asegura que este contenedor solo ocupe el ancho del menú */
     display: flex;
     flex-direction: column; 
-    
+    background-color: #efedd6;
     /* Elimina el margen superior que empuja el título */
     padding-top: 0; 
     
@@ -113,7 +113,7 @@ export default {
     margin-right: var(--espacio-separacion); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
     border-radius: var(--borde-radio);
-    background-color: #fff;
+    background-color: #efedd6;
     height: auto;
 }
 
@@ -149,7 +149,7 @@ export default {
    -------------------- */
 .icon {
     font-size: 1.5rem;
-    color: #a0a0a0; 
+    color: #ce2323; 
     order: -1; /* Mueve el ícono a la izquierda */
     margin-right: 0.6rem; 
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -159,7 +159,7 @@ export default {
     Estilo del Estado ACTIVO (Barra Roja)
    -------------------- */
 .sidebar__item.is-active {
-    background-color: #fcebeb; /* Fondo rosado/rojo muy ligero */
+    background-color: #ffffff; /* Fondo rosado/rojo muy ligero */
     font-weight: 700; 
 }
 
