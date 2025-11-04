@@ -55,8 +55,20 @@ export default {
 }
 </script>
 <style scoped>
+/*  Contenedor vertical para el título y el menú */
+.sidebar-wrapper {
+    /* CLAVE: Esto asegura que este contenedor solo ocupe el ancho del menú */
+    display: flex;
+    flex-direction: column; 
+    
+    /* Elimina el margen superior que empuja el título */
+    padding-top: 0; 
+    
+    /* Separación a la derecha del contenido */
+    margin-right: var(--espacio-separacion); 
+}
 /* --------------------
-   1. Variables de Diseño y Colores
+    Variables de Diseño y Colores
    -------------------- */
 :root {
     --color-primario: #d90022; /* Rojo para la barra activa e íconos */
@@ -68,12 +80,12 @@ export default {
 }
 
 /* --------------------
-   2. Maquetación Principal y Fuente
+    Maquetación Principal y Fuente
    -------------------- */
 .section {
 
     font-family: 'Ubuntu', sans-serif; 
-    display:block;
+    display:flex;
     position: relative;
     align-items: flex-start; /* Alinea los elementos al inicio (arriba) */
     /* Asegura que la sección de actividades tenga una altura mínima */
@@ -82,19 +94,14 @@ export default {
 
 }
 .title {
-    margin-bottom: 1.5rem; 
-    padding-left: var(--padding-contenido); 
+    margin:0;
+    padding: var(--padding-contenido)0.5rem; 
     text-transform: uppercase;
-}
-/* Contenedor que alinea el menú y el contenido */
-.page-container {
-    display: flex; 
-    align-items: flex-start; /* Mantenemos flex-start para alinear arriba si el contenido fuera más alto */
-    width: 100%;
+    font-size: 1.8rem;
 }
 
 /* --------------------
-   3. Estilos del Menú Lateral (.sidebar)
+   Estilos del Menú Lateral (.sidebar)
    -------------------- */
    .sidebar {
     /* CLAVE: Cambiamos de width fijo a min-content, que usa el ancho mínimo necesario
@@ -102,10 +109,11 @@ export default {
     width: min-content; 
     min-width: 150px; /* Ancho mínimo para que se vea bien, ajusta si es necesario */ 
     padding: var(--padding-contenido) 0; 
+    padding: 0.5rem 0;
     margin-right: var(--espacio-separacion); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
     border-radius: var(--borde-radio);
-    
+    background-color: #fff;
     height: auto;
 }
 
@@ -116,7 +124,7 @@ export default {
 }
 
 /* --------------------
-   4. Estilos de los Ítems (<li> y <a>)
+    Estilos de los Ítems (<li> y <a>)
    -------------------- */
 .sidebar__item {
     height: var(--item-height);
@@ -137,7 +145,7 @@ export default {
 }
 
 /* --------------------
-   5. Estilos de Íconos (Ícono a la izquierda)
+    Estilos de Íconos (Ícono a la izquierda)
    -------------------- */
 .icon {
     font-size: 1.5rem;
@@ -148,7 +156,7 @@ export default {
 }
 
 /* --------------------
-   6. Estilo del Estado ACTIVO (Barra Roja)
+    Estilo del Estado ACTIVO (Barra Roja)
    -------------------- */
 .sidebar__item.is-active {
     background-color: #fcebeb; /* Fondo rosado/rojo muy ligero */
@@ -169,7 +177,7 @@ export default {
 }
 
 /* --------------------
-   7. Contenedor del Contenido
+    Contenedor del Contenido
    -------------------- */
 .content {
     flex-grow: 1; 
