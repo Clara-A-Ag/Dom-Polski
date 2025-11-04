@@ -1,18 +1,20 @@
 <template>
-  <article class="novedad-card">
-    <img 
-      :src="novedad.imagenUrl" 
-      :alt="novedad.titulo" 
-      class="novedad-imagen"
-      @error="imagenError" 
-    />
-    <div class="novedad-contenido">
-      <h3>{{ novedad.titulo }}</h3>
-      <small class="novedad-fecha">{{ fechaFormateada }}</small>
-      <p>{{ novedad.descripcionCorta }}</p>
-      
-      </div>
-  </article>
+  <router-link :to="'/novedades/' + novedad.id" class="novedad-link-wrapper">
+    <article class="novedad-card">
+        <img 
+        :src="novedad.imagenUrl" 
+        :alt="novedad.titulo" 
+        class="novedad-imagen"
+        @error="imagenError" 
+        />
+        <div class="novedad-contenido">
+        <h3>{{ novedad.titulo }}</h3>
+        <small class="novedad-fecha">{{ fechaFormateada }}</small>
+        <p>{{ novedad.descripcionCorta }}</p>
+        
+        </div>
+    </article>
+  </router-link>
 </template>
 
 <script setup>
@@ -89,5 +91,10 @@ function imagenError(event) {
   font-size: 1rem;
   color: #555;
   margin-bottom: 0;
+}
+
+.novedad-link-wrapper {
+  text-decoration: none; /* Quita el subrayado */
+  color: inherit; /* Hereda el color del texto normal */
 }
 </style>

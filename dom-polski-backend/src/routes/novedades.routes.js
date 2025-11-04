@@ -77,4 +77,26 @@ router.get('/destacadas', async (req, res) => {
   res.json(data); // Nota: Esto devuelve un Array
 });
 
+// Endpoint 4: Obtener UNA noticia por su ID
+// Esta ruta debe ir DESPUÉS de /temporales y /destacadas
+// para que no confunda ':id' con 'temporales'.
+router.get('/:id', async (req, res) => {
+  // 1. Leemos el ID de los parámetros de la URL
+  const { id } = req.params;
+
+  // 2. Pedimos a Supabase UN solo registro
+  const { data, error } = await supabase
+    .from('Novedad')
+    .select('*')
+    .eq('id', id)
+    .single(); // .single() es la clave: nos da un objeto, no un array
+
+  if (error) {
+    // Si no lo encuentra, .single() da un error
+    return res.status(404).json({ error: 'Noticia no encontrada' });
+  }
+
+  res.json(data);
+});
+
 export default router;

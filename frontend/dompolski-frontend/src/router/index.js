@@ -30,6 +30,13 @@ const routes =[
       path: '/novedades',
       name: 'Novedades',
       component: Novedades
+    },
+    {
+      path: '/novedades/:id', // El ':id' es un parámetro dinámico
+      name: 'NovedadDetalle',
+      // Buena práctica: "Lazy Loading".
+      // No carga el código de esta vista hasta que se visita por primera vez.
+      component: () => import('../views/NovedadDetalleVista.vue')
     }
   ];
 
