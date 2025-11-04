@@ -1,6 +1,6 @@
 <template>
   <section class="activity-section">
-    <h2 class="activity-title">COCINA</h2>
+    <h2 class="activity-title">Cocina</h2>
     <div class="recipe-gallery">
       <div class="recipe-card" v-for="n in 3" :key="n">
         <div class="photo-placeholder">foto</div>

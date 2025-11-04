@@ -1,40 +1,31 @@
 <template>
   <section class="section">
-    <div class="sidebar-wrapper">
-    <h2 class="title">Secciones</h2>
-    
-    <div class="sidebar"> 
+    <div class="main-content-area">
       
-      <ul class="sidebar__list"> 
+      <div class="sidebar-wrapper"> 
+        <h2 class="title">Cultural:</h2>
         
-        <li class="sidebar__item" :class="{ 'is-active': activeTab === 'idioma' }">
-          <a href="#idioma" @click.prevent="activeTab = 'idioma'">
-            <span class="material-symbols-outlined icon">language</span>
-            <span>Idioma</span>
-          </a>
-        </li>
+        <div class="sidebar"> 
+          <ul class="sidebar__list"> 
+            
+            <li class="sidebar__item" 
+                v-for="activity in activities" 
+                :key="activity.id"
+                :class="{ 'is-active': activeTab === activity.id }">
+              
+              <a href="#" @click.prevent="selectTab(activity.id)">
+                <span class="material-symbols-outlined icon">{{ activity.iconName }}</span>
+                <span>{{ activity.name }}</span>
+              </a>
+            </li>
 
-        <li class="sidebar__item" :class="{ 'is-active': activeTab === 'ballet' }">
-          <a href="#ballet" @click.prevent="activeTab = 'ballet'">
-            <span class="material-symbols-outlined icon">theater_comedy</span>
-            <span>Ballet</span>
-          </a>
-        </li>
-        
-        <li class="sidebar__item" :class="{ 'is-active': activeTab === 'cocina' }">
-          <a href="#cocina" @click.prevent="activeTab = 'cocina'">
-            <span class="material-symbols-outlined icon">dinner_dining</span>
-            <span>Cocina</span>
-          </a>
-        </li>
-
-      </ul>
-    </div>
-    </div>
-    <div class="content">
-      <Idioma v-if="activeTab === 'idioma'" id="idioma" />
-      <Ballet v-if="activeTab === 'ballet'" id="ballet" />
-      <Cocina v-if="activeTab === 'cocina'" id="cocina" />
+          </ul>
+        </div>
+      </div>
+      
+      <div class="content">
+        <component :is="activeComponent"></component>
+      </div>
     </div>
   </section>
 </template>
@@ -49,72 +40,139 @@ export default {
   components: { Idioma, Ballet, Cocina },
   data() {
     return {
-      activeTab: 'idioma' // Pestaña activa por defecto
+      activities: [], 
+      activeTab: null,
+      // Mapeo de nombres de actividades a los componentes de Vue
+      componentMap: {
+        'Idioma': Idioma,
+        'Ballet': Ballet,
+        'Cocina': Cocina,
+      }
     };
+  },
+  computed: {
+    // Computa dinámicamente qué componente mostrar
+    activeComponent() {
+      const activeActivity = this.activities.find(a => a.id === this.activeTab);
+      if (activeActivity && this.componentMap[activeActivity.name]) {
+        return this.componentMap[activeActivity.name];
+      }
+      return null;
+    }
+  },
+  methods: {
+    selectTab(activityId) {
+      this.activeTab = activityId;
+    },
+    
+    // Función para obtener datos de la Base de Datos 
+    async fetchActivitiesFromBSDS() {
+      try {
+        
+        const API_BASE_URL = 'http://localhost:3000'; // puerto backend
+        const ENDPOINT = '/dom-polski-backend/src/routes/actividades.routes.js'; //  ruta 
+        
+        const response = await fetch(API_BASE_URL + ENDPOINT); 
+        
+        if (!response.ok) {
+          throw new Error(`Error HTTP! Estado: ${response.status}`);
+        }
+        
+        const dbActivities = await response.json(); 
+        
+        // Asumiendo que tu backend devuelve un array de objetos con { id, name, iconName }
+        this.activities = dbActivities;
+
+        if (this.activities.length > 0) {
+          this.activeTab = this.activities[0].id;
+        }
+      } catch (error) {
+        console.error("Error al obtener las actividades:", error);
+        // Fallback: Si falla, puedes usar datos estáticos para desarrollo
+        this.activities = [
+            { id: 'idioma', name: 'Idioma', iconName: 'language' },
+            { id: 'ballet', name: 'Ballet', iconName: 'theater_comedy' },
+            { id: 'cocina', name: 'Cocina', iconName: 'dinner_dining' },
+        ];
+        if (this.activities.length > 0) {
+            this.activeTab = this.activities[0].id;
+        }
+      }
+    }
+  },
+  created() {
+    this.fetchActivitiesFromBSDS();
   }
 }
 </script>
+
 <style scoped>
-/*  Contenedor vertical para el título y el menú */
-.sidebar-wrapper {
-    /* CLAVE: Esto asegura que este contenedor solo ocupe el ancho del menú */
-    display: flex;
-    flex-direction: column; 
-    background-color: #efedd6;
-    /* Elimina el margen superior que empuja el título */
-    padding-top: 0; 
-    
-    /* Separación a la derecha del contenido */
-    margin-right: var(--espacio-separacion); 
-}
 /* --------------------
-    Variables de Diseño y Colores
+   1. Variables de Diseño y Colores
    -------------------- */
 :root {
-    --color-primario: #d90022; /* Rojo para la barra activa e íconos */
+    --color-primario: #d90022; 
     --color-texto: #333;
     --item-height: 3.5rem; 
     --borde-radio: 0.5rem;
-    --padding-contenido: 2rem; /* Relleno para separación general */
-    --espacio-separacion: 3rem; /* Espacio horizontal entre menú y contenido */
+    --padding-base: 2rem; 
+    --espacio-separacion: 3rem;
+    --fondo-menu: #efedd6; /* Color de fondo del menú */
+    --fondo-activo: #efedd6; /* Color de fondo del ítem activo */
 }
 
 /* --------------------
-    Maquetación Principal y Fuente
+   2. Maquetación Principal y Fuente
    -------------------- */
 .section {
-
     font-family: 'Ubuntu', sans-serif; 
-    display:flex;
+    display: block; 
     position: relative;
-    align-items: flex-start; /* Alinea los elementos al inicio (arriba) */
-    /* Asegura que la sección de actividades tenga una altura mínima */
     min-height: auto; 
-    padding: 0 var(--padding-contenido); /* Padding horizontal, 0 vertical */
-
+    padding: 0;
 }
-.title {
-    margin:0;
-    padding: var(--padding-contenido)0.5rem; 
-    text-transform: uppercase;
-    font-size: 1.8rem;
+
+/* Contenedor Flexbox principal: alinea sidebar-wrapper y content en fila */
+.main-content-area {
+    display: flex;
+    align-items: flex-start;
+    padding: var(--padding-base); /* Padding para toda la sección de contenido */
+    width: 100%;
 }
 
 /* --------------------
-   Estilos del Menú Lateral (.sidebar)
+   3. Contenedor del Menú (sidebar-wrapper)
    -------------------- */
-   .sidebar {
-    /* CLAVE: Cambiamos de width fijo a min-content, que usa el ancho mínimo necesario
-              para mostrar todo el contenido. */
-    width: min-content; 
-    min-width: 150px; /* Ancho mínimo para que se vea bien, ajusta si es necesario */ 
-    padding: var(--padding-contenido) 0; 
-    padding: 0.5rem 0;
+.sidebar-wrapper {
+  background-color: #efedd6;
+    display: flex;
+    flex-direction: column; /* Alinea Título y Menú en columna */
     margin-right: var(--espacio-separacion); 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
+}
+
+/* Estilo del Título 'SECCIONES' */
+.title {
+  background-color: #efedd6;
+    margin: 0; 
+    padding: 4.5px; 
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* --------------------
+   4. Estilos del Menú Lateral (.sidebar)
+   -------------------- */
+.sidebar {
+    width: min-content; /* Ocupa solo el ancho necesario */
+    min-width: 150px; 
+    background-color: var(--fondo-menu); 
+    padding: 0.5rem 0; 
+    
+    border: 1px solid #d0c8b3; 
     border-radius: var(--borde-radio);
-    background-color: #efedd6;
-    height: auto;
+    
+    height: auto; 
 }
 
 .sidebar__list {
@@ -124,42 +182,37 @@ export default {
 }
 
 /* --------------------
-    Estilos de los Ítems (<li> y <a>)
+   5. Estilos de los Ítems (<li> y <a>)
    -------------------- */
 .sidebar__item {
     height: var(--item-height);
-    margin: 0.25rem 0;
     transition: background-color 0.2s;
+    padding-bottom: 5px;
+    padding-top: 3px;
 }
 
 .sidebar__item a {
     display: flex;
-    align-items: center; /* Centrado vertical */
+    align-items: center; 
     height: 100%;
     text-decoration: none;
     color: var(--color-texto);
     font-size: 1.1rem;
-    padding: 0 0.8rem;
-    text-transform: capitalize; /* SOLO la primera letra en mayúscula */
+    padding: 0 0.8rem; /* Padding lateral más estrecho */
+    text-transform: capitalize; 
     font-weight: 500; 
 }
 
 /* --------------------
-    Estilos de Íconos (Ícono a la izquierda)
+   6. Estilo del Estado ACTIVO (Barra Roja)
    -------------------- */
-.icon {
-    font-size: 1.5rem;
-    color: #ce2323; 
-    order: -1; /* Mueve el ícono a la izquierda */
-    margin-right: 0.6rem; 
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+.sidebar__item:hover {
+    background-color: #efedd6; 
+    cursor: pointer;
 }
 
-/* --------------------
-    Estilo del Estado ACTIVO (Barra Roja)
-   -------------------- */
 .sidebar__item.is-active {
-    background-color: #ffffff; /* Fondo rosado/rojo muy ligero */
+    background-color: var(--fondo-activo); 
     font-weight: 700; 
 }
 
@@ -170,27 +223,30 @@ export default {
     color: var(--color-texto);
 }
 
-/* Colorea el ícono del ítem activo de rojo */
+/* Colorea el ícono del ítem activo */
 .sidebar__item.is-active .icon {
-    color: var(--color-primario); 
-    font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+    color: var(--color-texto);
+    font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 24;
 }
 
 /* --------------------
-    Contenedor del Contenido
+   7. Estilos de Íconos
+   -------------------- */
+.icon {
+    font-size: 1.5rem;
+    color: #c00606; 
+    order: -1; 
+    margin-right: 0.6rem; 
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* --------------------
+   8. Contenedor del Contenido
    -------------------- */
 .content {
     flex-grow: 1; 
-    padding: var(--padding-contenido); 
+    padding: var(--padding-base); 
     background-color: #fff; 
-    border-radius: var(--borde-radio);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); 
-height: auto;
-}
-
-/* Efectos de Interacción (Hover) */
-.sidebar__item:hover {
-    background-color: #f0f0f0; 
-    cursor: pointer;
+    height: auto;
 }
 </style>

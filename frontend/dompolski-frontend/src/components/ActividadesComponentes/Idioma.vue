@@ -1,6 +1,6 @@
 <template>
   <section class="activity-section">
-    <h2 class="activity-title">IDIOMA</h2>
+    <h2 class="activity-title">Idioma</h2>
     <div class="activity-content">
       <div class="language-card">
         <div class="language-box">
