@@ -65,7 +65,7 @@
 
 </script>
 
-<style>
+<style scoped>
 .img2{
     display: flex;
 background-color: #f2efff;
