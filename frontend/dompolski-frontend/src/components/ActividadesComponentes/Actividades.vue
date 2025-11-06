@@ -68,12 +68,13 @@ export default {
     // Función para obtener datos de la Base de Datos 
     async fetchActivitiesFromBSDS() {
       try {
-        
-        const API_BASE_URL = 'http://localhost:3000'; // puerto backend
-        const ENDPOINT = '/dom-polski-backend/src/routes/actividades.routes.js'; //  ruta 
-        
-        const response = await fetch(API_BASE_URL + ENDPOINT); 
-        
+        // ActividadesSection.vue
+const API_BASE_URL = 'http://localhost:3000';
+
+const ENDPOINT = 'routes/actividades';
+
+const response = await fetch(API_BASE_URL + ENDPOINT); 
+
         if (!response.ok) {
           throw new Error(`Error HTTP! Estado: ${response.status}`);
         }

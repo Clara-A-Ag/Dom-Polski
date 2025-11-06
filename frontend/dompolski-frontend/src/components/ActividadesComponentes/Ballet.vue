@@ -30,21 +30,21 @@
 <script>
 export default {
   name: 'BalletVue',
-  data() {
+data() {
     return {
-      currentSlideIndex: 0,
-      // *** 1. DEFINIMOS LOS DATOS AQUÍ DIRECTAMENTE ***
-      slidesData: [
-        { type: 'image', src: '/assets/ballet adulto.JPEG',alt: 'Foto de adultos de ballet' },
-        { type: 'image', src: '/assets/ballet niños.JEPG', alt: 'Foto de niños de ballet' },
-        { type: 'video',  src: '/frontend/dompolski-frontend/public/assets/ballet adulyto4.MP4', alt: 'Video promocional' },
-        { type: 'image', src: '/assets/ballet niños1.JEPG', alt: 'Foto de niños de ballet' },
-        { type: 'image', src: '/assets/ballet.JEPG', alt: 'Foto de niños con trajes' },
-        { type: 'image', src: '/assets/ballet adulto1.JEPG', alt: 'Foto de adultos de ballet' },
-        { type: 'image', src: '/assets/ballet adulto2.JEPG', alt: 'Foto de adultos de ballet' },
-      ],
+        currentSlideIndex: 0,
+        slidesData: [
+            { type: 'image', src: '/assets/ballet adulto.JPEG', alt: 'Foto de adultos de ballet' }, 
+            { type: 'image', src: '/assets/ballet niños.JPEG', alt: 'Foto de niños de ballet' },
+            { type: 'video', src: '/assets/ballet adulyto4.MP4', alt: 'Video promocional' },
+            { type: 'image', src: '/assets/ballet niños1.jpeg', alt: 'Foto de niños de ballet' },
+            { type: 'image', src: '/assets/ballet.JPEG', alt: 'Foto de niños con trajes' },
+            { type: 'image', src: '/assets/ballet adulto1.JPEG', alt: 'Foto de adultos de ballet' },
+            { type: 'image', src: '/assets/ballet adulto2.JPEG', alt: 'Foto de adultos de ballet' },
+        ],
     };
-  },
+},
+// ...
   computed: {
     totalSlides() {
       return this.slidesData.length;
@@ -63,36 +63,33 @@ export default {
       this.handleMediaPlayback();
     },
 
-    // La función handleMediaPlayback también se mantiene igual
+  
     handleMediaPlayback() {
       const container = this.$refs.carouselContainer; 
-
-    // Verificamos si la referencia existe antes de intentar consultarla
-    if (!container) {
-        // Esto puede ocurrir si el componente aún no se ha renderizado
-        console.warn("Advertencia: El contenedor del carrusel no está disponible.");
-        return; 
-    }
-
-    // Ahora usamos el contenedor referenciado para la consulta
+    if (!container) return; // Salir si el DOM no está listo
     const slides = container.querySelectorAll('.slide');
 
     slides.forEach((slideEl, index) => {
-            const video = slideEl.querySelector('video');
-            if (video) {
-                if (index === this.currentSlideIndex) {
-                    video.play().catch(error => {
-                        console.warn("Advertencia: No se pudo reproducir el video automáticamente.", error);
-                    });
-                } else {
-                    video.pause();
-                    video.currentTime = 0;
-                }
-                const video = slideEl.querySelector('video');
+        // 1. Declarar y asignar 'video' al inicio del bucle.
+        const video = slideEl.querySelector('video'); // <-- ¡MOVER ARRIBA!
+
+        // 2. Ahora ya puedes usar 'video'
+        if (video) { 
+            if (index === this.currentSlideIndex) {
+                video.play().catch(error => {
+                    console.warn("Advertencia: No se pudo reproducir el video.", error);
+                });
+            } else {
+                video.pause();
+                video.currentTime = 0;
             }
-        });
-    },
+        }
+    });
+},
   },
+
+
+
   // *** 2. Usamos el hook created para inicializar, o mounted ***
   mounted() {
     this.handleMediaPlayback();
