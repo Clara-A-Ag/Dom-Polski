@@ -46,16 +46,16 @@
 
 
 <script>
-
-
-
+export default {
+  name: 'ContactoComponent'
+}
 
 </script>
 
 <style>
 .img2{
     display: flex;
-background-color: #f2efff;
+background-color: white;
 justify-content: space-between; /* Distribuye el espacio entre los elementos */
 align-items: center; /* Alinea verticalmente los elementos al centro (opcional) */
     
