@@ -15,5 +15,15 @@ router.get('/:relacion/:idRelacionado', async (req, res) => {
   if (error) return res.status(500).json({ error: error.message });
   res.json(data);
 });
-
+// Ejemplo de rutas/multimedia.routes.js (PARA EL CARRUSEL)
+router.get('/Actividad/:id', async (req, res) => {
+    const { id } = req.params;
+    const { data, error } = await supabase
+        .from('Multimedia')
+        .select('*')
+        .eq('relacionadoCon', 'Actividad')
+        .eq('idRelacionado', id);
+    if (error) return res.status(500).json(error);
+    res.json(data);
+});
 export default router;

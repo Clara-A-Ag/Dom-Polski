@@ -1,11 +1,16 @@
 <template>
   <section class="section">
     <div class="main-content-area">
-      
-      <div class="sidebar-wrapper"> 
-        <h2 class="title">Cultural:</h2>
         
-        <div class="sidebar"> 
+      <div class="sidebar-wrapper"> 
+        <h2 class="title" @click="toggleSidebar">
+          Cultural:
+          <span class="material-symbols-outlined expand-icon">
+            {{ isExpanded ? 'chevron_left' : 'menu' }}
+          </span>
+        </h2>
+        
+        <div class="sidebar" :class="{ 'is-expanded': isExpanded }"> 
           <ul class="sidebar__list"> 
             
             <li class="sidebar__item" 
@@ -15,89 +20,110 @@
               
               <a href="#" @click.prevent="selectTab(activity.id)">
                 <span class="material-symbols-outlined icon">{{ activity.iconName }}</span>
-                <span>{{ activity.name }}</span>
+                <span :class="{ 'name-text': !isExpanded }">{{ activity.name }}</span>
               </a>
             </li>
 
           </ul>
         </div>
       </div>
-      
+        
       <div class="content">
-        <component :is="activeComponent"></component>
+        <component :is="activeComponent.component" v-bind="activeComponent.props || {}"></component>
       </div>
     </div>
   </section>
 </template>
 
 <script>
+// Importa SOLO los componentes con lógica especial y el componente genérico
 import Idioma from './Idioma.vue';
-import Ballet from './Ballet.vue';
 import Cocina from './Cocina.vue';
+import GenericActivityCard from './GenericActivityCard.vue'; // Renombré 'GeneralActCard' a 'GenericActivityCard'
 
 export default {
   name: 'ActividadesSection',
-  components: { Idioma, Ballet, Cocina },
+  components: { Idioma, Cocina, GenericActivityCard },
   data() {
     return {
       activities: [], 
       activeTab: null,
-      // Mapeo de nombres de actividades a los componentes de Vue
+      isExpanded: true, // Iniciar desplegado para mostrar el texto al inicio
+
+      // Mapeo solo para componentes que tienen una estructura única (Idioma y Cocina)
       componentMap: {
         'Idioma': Idioma,
-        'Ballet': Ballet,
         'Cocina': Cocina,
-      }
+      },
+      API_BASE_URL: 'http://localhost:3000',
     };
   },
   computed: {
-    // Computa dinámicamente qué componente mostrar
     activeComponent() {
-      const activeActivity = this.activities.find(a => a.id === this.activeTab);
-      if (activeActivity && this.componentMap[activeActivity.name]) {
-        return this.componentMap[activeActivity.name];
-      }
-      return null;
+        const activeActivity = this.activities.find(a => a.id === this.activeTab);
+        if (!activeActivity) return { component: null, props: {} };
+
+        const activityName = activeActivity.name;
+        
+        // El campo 'descripcion' viene de la tabla Actividad
+        const activityDescription = activeActivity.descripcion || 'No hay descripción detallada.';
+
+        // 1. Determinar qué componente usar (especial o genérico)
+        let ComponentToRender = this.componentMap[activityName];
+        
+        // Si NO está mapeado (ej: Ballet o cualquier actividad futura), usar el genérico.
+        if (!ComponentToRender) {
+            ComponentToRender = GenericActivityCard;
+        }
+
+        // 2. Si se usa la plantilla genérica, devolver la configuración con props.
+        if (ComponentToRender === GenericActivityCard) {
+            return {
+                component: ComponentToRender,
+                props: {
+                    // activityId debe coincidir con el ID de la fila en tu tabla de detalles ('Idioma')
+                    activityId: activeActivity.id, 
+                    activityName: activityName,
+                    activityDescription: activityDescription,
+                }
+            };
+        }
+        
+        // 3. Devolver el componente especial (Idioma o Cocina)
+        return { component: ComponentToRender, props: {} }; 
     }
   },
   methods: {
     selectTab(activityId) {
       this.activeTab = activityId;
+      // Opcional: Colapsar el menú al seleccionar una opción
+      // this.isExpanded = false; 
+    },
+    toggleSidebar() {
+        this.isExpanded = !this.isExpanded;
     },
     
-    // Función para obtener datos de la Base de Datos 
     async fetchActivitiesFromBSDS() {
       try {
-        // ActividadesSection.vue
-const API_BASE_URL = 'http://localhost:3000';
+        const ENDPOINT = '/routes/actividades'; // Asumo que esta es la ruta para obtener tu lista de Actividades
 
-const ENDPOINT = 'routes/actividades';
-
-const response = await fetch(API_BASE_URL + ENDPOINT); 
+        const response = await fetch(this.API_BASE_URL + ENDPOINT); 
 
         if (!response.ok) {
           throw new Error(`Error HTTP! Estado: ${response.status}`);
         }
         
         const dbActivities = await response.json(); 
-        
-        // Asumiendo que tu backend devuelve un array de objetos con { id, name, iconName }
         this.activities = dbActivities;
 
         if (this.activities.length > 0) {
-          this.activeTab = this.activities[0].id;
+          // Si el ID activo no es válido, selecciona la primera pestaña.
+          if (!this.activeTab || !this.activities.some(a => a.id === this.activeTab)) {
+            this.activeTab = this.activities[0].id;
+          }
         }
       } catch (error) {
         console.error("Error al obtener las actividades:", error);
-        // Fallback: Si falla, puedes usar datos estáticos para desarrollo
-        this.activities = [
-            { id: 'idioma', name: 'Idioma', iconName: 'language' },
-            { id: 'ballet', name: 'Ballet', iconName: 'theater_comedy' },
-            { id: 'cocina', name: 'Cocina', iconName: 'dinner_dining' },
-        ];
-        if (this.activities.length > 0) {
-            this.activeTab = this.activities[0].id;
-        }
       }
     }
   },
@@ -118,26 +144,18 @@ const response = await fetch(API_BASE_URL + ENDPOINT);
     --borde-radio: 0.5rem;
     --padding-base: 2rem; 
     --espacio-separacion: 3rem;
-    --fondo-menu: #efedd6; /* Color de fondo del menú */
-    --fondo-activo: #efedd6; /* Color de fondo del ítem activo */
+    --fondo-menu: #efedd6;
+    --fondo-activo: #efedd6;
 }
 
 /* --------------------
    2. Maquetación Principal y Fuente
    -------------------- */
-.section {
-    font-family: 'Ubuntu', sans-serif; 
-    display: block; 
-    position: relative;
-    min-height: auto; 
-    padding: 0;
-}
-
-/* Contenedor Flexbox principal: alinea sidebar-wrapper y content en fila */
+.section { display: block; position: relative; padding: 0; }
 .main-content-area {
     display: flex;
     align-items: flex-start;
-    padding: var(--padding-base); /* Padding para toda la sección de contenido */
+    padding: var(--padding-base);
     width: 100%;
 }
 
@@ -145,51 +163,69 @@ const response = await fetch(API_BASE_URL + ENDPOINT);
    3. Contenedor del Menú (sidebar-wrapper)
    -------------------- */
 .sidebar-wrapper {
-  background-color: #efedd6;
+    background-color: #efedd6;
     display: flex;
-    flex-direction: column; /* Alinea Título y Menú en columna */
+    flex-direction: column;
     margin-right: var(--espacio-separacion); 
+    border: 1px solid #d0c8b3;
+    border-radius: var(--borde-radio);
+    /* Asegura que el borde no se aplique al título si no tiene el mismo fondo */
 }
 
-/* Estilo del Título 'SECCIONES' */
 .title {
-  background-color: #efedd6;
+    background-color: #efedd6;
     margin: 0; 
-    padding: 4.5px; 
+    padding: 0.5rem 0.8rem;
     text-transform: uppercase;
     font-size: 1.5rem;
     font-weight: 700;
+    color: var(--color-texto);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #d0c8b3; /* Separador */
+}
+
+.expand-icon {
+    font-size: 1.2rem;
+    color: #c00606;
+    transition: transform 0.3s;
 }
 
 /* --------------------
-   4. Estilos del Menú Lateral (.sidebar)
+   4. Estilos del Menú Lateral (.sidebar) - EFECTO EXPANDIBLE
    -------------------- */
 .sidebar {
-    width: min-content; /* Ocupa solo el ancho necesario */
-    min-width: 150px; 
+    /* Estado Plegado */
+    width: 60px; /* Ancho solo para el ícono y padding */
+    overflow: hidden; 
+    transition: width 0.3s ease-out; /* Animación de expansión */
+    
     background-color: var(--fondo-menu); 
     padding: 0.5rem 0; 
-    
-    border: 1px solid #d0c8b3; 
-    border-radius: var(--borde-radio);
     
     height: auto; 
 }
 
-.sidebar__list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+/* Estado Desplegado */
+.sidebar.is-expanded {
+    width: 200px; /* Ancho para mostrar el texto (Ajusta este valor si es necesario) */
+}
+
+.sidebar__list { list-style: none; margin: 0; padding: 0; }
+
+/* Ocultar el texto en el estado plegado */
+.sidebar:not(.is-expanded) .sidebar__item a .name-text {
+    display: none;
 }
 
 /* --------------------
-   5. Estilos de los Ítems (<li> y <a>)
+   5. Estilos de Ítems y Activo
    -------------------- */
 .sidebar__item {
     height: var(--item-height);
     transition: background-color 0.2s;
-    padding-bottom: 5px;
-    padding-top: 3px;
 }
 
 .sidebar__item a {
@@ -199,55 +235,34 @@ const response = await fetch(API_BASE_URL + ENDPOINT);
     text-decoration: none;
     color: var(--color-texto);
     font-size: 1.1rem;
-    padding: 0 0.8rem; /* Padding lateral más estrecho */
+    padding: 0 0.5rem; /* Ajuste el padding para la transición */
     text-transform: capitalize; 
     font-weight: 500; 
 }
 
-/* --------------------
-   6. Estilo del Estado ACTIVO (Barra Roja)
-   -------------------- */
-.sidebar__item:hover {
-    background-color: #efedd6; 
-    cursor: pointer;
-}
+.sidebar__item.is-active { background-color: var(--fondo-activo); font-weight: 700; }
 
-.sidebar__item.is-active {
-    background-color: var(--fondo-activo); 
-    font-weight: 700; 
-}
-
-/* BARRA LATERAL ROJA */
+/* BARRA LATERAL ROJA del activo */
 .sidebar__item.is-active a {
     border-left: 5px solid var(--color-primario); 
-    padding-left: calc(0.8rem - 5px); 
+    padding-left: calc(0.5rem - 5px); 
     color: var(--color-texto);
 }
 
-/* Colorea el ícono del ítem activo */
-.sidebar__item.is-active .icon {
-    color: var(--color-texto);
-    font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 24;
-}
-
-/* --------------------
-   7. Estilos de Íconos
-   -------------------- */
 .icon {
     font-size: 1.5rem;
     color: #c00606; 
-    order: -1; 
     margin-right: 0.6rem; 
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    flex-shrink: 0; /* Evita que el ícono se encoja */
 }
 
 /* --------------------
-   8. Contenedor del Contenido
+   6. Contenedor del Contenido
    -------------------- */
 .content {
     flex-grow: 1; 
     padding: var(--padding-base); 
     background-color: #fff; 
-    height: auto;
+    min-width: 0; /* Importante para el layout flexible */
 }
 </style>

@@ -10,13 +10,13 @@ import miembrosRoutes from './routes/miembros.routes.js';
 import multimediaRoutes from './routes/multimedia.routes.js';
 import contactoRoutes from './routes/contacto.routes.js';
 import recetasRoutes from './routes/recetas.routes.js';
-import idiomasRouter from './src/routes/idiomas.routes.js';
+import detalleACT from './src/routes/detalleACT.routes.js';
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/idiomas', idiomasRouter);
+app.use('/detalleACT', detalleACT);
 app.use('/novedades', novedadesRoutes);
 app.use('/actividades', actividadesRoutes);
 app.use('/historia', historiaRoutes);
