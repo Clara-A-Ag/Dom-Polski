@@ -3,14 +3,9 @@
     <div class="main-content-area">
         
       <div class="sidebar-wrapper"> 
-        <h2 class="title" @click="toggleSidebar">
-          Cultural:
-          <span class="material-symbols-outlined expand-icon">
-            {{ isExpanded ? 'chevron_left' : 'menu' }}
-          </span>
-        </h2>
+        <h2 class="title">Cultural:</h2>
         
-        <div class="sidebar" :class="{ 'is-expanded': isExpanded }"> 
+        <div class="sidebar"> 
           <ul class="sidebar__list"> 
             
             <li class="sidebar__item" 
@@ -20,7 +15,7 @@
               
               <a href="#" @click.prevent="selectTab(activity.id)">
                 <span class="material-symbols-outlined icon">{{ activity.iconName }}</span>
-                <span :class="{ 'name-text': !isExpanded }">{{ activity.name }}</span>
+                <span>{{ activity.name }}</span>
               </a>
             </li>
 
@@ -36,21 +31,19 @@
 </template>
 
 <script>
-// Importa SOLO los componentes con lógica especial y el componente genérico
 import Idioma from './Idioma.vue';
 import Cocina from './Cocina.vue';
-import GeneralActCard from './GeneralActCard.vue'; 
+import GeneralActCard from './GeneralActCard.vue';
 
 export default {
   name: 'ActividadesSection',
-  components: { Idioma, Cocina, GeneralActCard },
+  components: { Idioma, Cocina, GeneralActCard},
   data() {
     return {
       activities: [], 
       activeTab: null,
-      isExpanded: true, // Iniciar desplegado para mostrar el texto al inicio
-
-      // Mapeo solo para componentes que tienen una estructura única (Idioma y Cocina)
+      
+      
       componentMap: {
         'Idioma': Idioma,
         'Cocina': Cocina,
@@ -65,23 +58,21 @@ export default {
 
         const activityName = activeActivity.name;
         
-        // El campo 'descripcion' viene de la tabla Actividad
         const activityDescription = activeActivity.descripcion || 'No hay descripción detallada.';
 
         // 1. Determinar qué componente usar (especial o genérico)
         let ComponentToRender = this.componentMap[activityName];
         
-        // Si NO está mapeado (ej: Ballet o cualquier actividad futura), usar el genérico.
+        // Si NO está mapeado, usar el genérico. Esto incluye a Ballet y futuras actividades.
         if (!ComponentToRender) {
             ComponentToRender = GeneralActCard;
         }
 
-        // 2. Si se usa la plantilla genérica, devolver la configuración con props.
+        // 2. Si es la plantilla genérica, devolver la configuración con props.
         if (ComponentToRender === GeneralActCard) {
             return {
                 component: ComponentToRender,
                 props: {
-                    // activityId debe coincidir con el ID de la fila en tu tabla de detalles ('Idioma')
                     activityId: activeActivity.id, 
                     activityName: activityName,
                     activityDescription: activityDescription,
@@ -96,16 +87,13 @@ export default {
   methods: {
     selectTab(activityId) {
       this.activeTab = activityId;
-      // Opcional: Colapsar el menú al seleccionar una opción
-      // this.isExpanded = false; 
     },
-    toggleSidebar() {
-        this.isExpanded = !this.isExpanded;
-    },
+   
     
     async fetchActivitiesFromBSDS() {
+    
       try {
-        const ENDPOINT = '/routes/actividades'; // Asumo que esta es la ruta para obtener tu lista de Actividades
+        const ENDPOINT = '/actividades';
 
         const response = await fetch(this.API_BASE_URL + ENDPOINT); 
 
@@ -117,7 +105,6 @@ export default {
         this.activities = dbActivities;
 
         if (this.activities.length > 0) {
-          // Si el ID activo no es válido, selecciona la primera pestaña.
           if (!this.activeTab || !this.activities.some(a => a.id === this.activeTab)) {
             this.activeTab = this.activities[0].id;
           }
@@ -132,7 +119,6 @@ export default {
   }
 }
 </script>
-
 <style scoped>
 /* --------------------
    1. Variables de Diseño y Colores
@@ -169,7 +155,6 @@ export default {
     margin-right: var(--espacio-separacion); 
     border: 1px solid #d0c8b3;
     border-radius: var(--borde-radio);
-    /* Asegura que el borde no se aplique al título si no tiene el mismo fondo */
 }
 
 .title {
@@ -180,27 +165,17 @@ export default {
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--color-texto);
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #d0c8b3; /* Separador */
-}
-
-.expand-icon {
-    font-size: 1.2rem;
-    color: #c00606;
-    transition: transform 0.3s;
+    /* Se elimina la lógica de expansión del título */
+    border-bottom: 1px solid #d0c8b3; 
 }
 
 /* --------------------
-   4. Estilos del Menú Lateral (.sidebar) - EFECTO EXPANDIBLE
+   4. Estilos del Menú Lateral (.sidebar) - ANCHO FIJO
    -------------------- */
 .sidebar {
-    /* Estado Plegado */
-    width: 60px; /* Ancho solo para el ícono y padding */
+    /* Estado FIJO, ancho suficiente para texto e ícono */
+    width: 200px; 
     overflow: hidden; 
-    transition: width 0.3s ease-out; /* Animación de expansión */
     
     background-color: var(--fondo-menu); 
     padding: 0.5rem 0; 
@@ -208,17 +183,7 @@ export default {
     height: auto; 
 }
 
-/* Estado Desplegado */
-.sidebar.is-expanded {
-    width: 200px; /* Ancho para mostrar el texto (Ajusta este valor si es necesario) */
-}
-
 .sidebar__list { list-style: none; margin: 0; padding: 0; }
-
-/* Ocultar el texto en el estado plegado */
-.sidebar:not(.is-expanded) .sidebar__item a .name-text {
-    display: none;
-}
 
 /* --------------------
    5. Estilos de Ítems y Activo
@@ -235,7 +200,7 @@ export default {
     text-decoration: none;
     color: var(--color-texto);
     font-size: 1.1rem;
-    padding: 0 0.5rem; /* Ajuste el padding para la transición */
+    padding: 0 0.8rem; /* Padding original para el menú visible */
     text-transform: capitalize; 
     font-weight: 500; 
 }
@@ -245,7 +210,7 @@ export default {
 /* BARRA LATERAL ROJA del activo */
 .sidebar__item.is-active a {
     border-left: 5px solid var(--color-primario); 
-    padding-left: calc(0.5rem - 5px); 
+    padding-left: calc(0.8rem - 5px); /* Ajuste basado en el nuevo padding */
     color: var(--color-texto);
 }
 
@@ -253,7 +218,7 @@ export default {
     font-size: 1.5rem;
     color: #c00606; 
     margin-right: 0.6rem; 
-    flex-shrink: 0; /* Evita que el ícono se encoja */
+    flex-shrink: 0; 
 }
 
 /* --------------------
@@ -263,6 +228,6 @@ export default {
     flex-grow: 1; 
     padding: var(--padding-base); 
     background-color: #fff; 
-    min-width: 0; /* Importante para el layout flexible */
+    min-width: 0; 
 }
 </style>

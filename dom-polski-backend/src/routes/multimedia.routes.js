@@ -20,10 +20,20 @@ router.get('/Actividad/:id', async (req, res) => {
     const { id } = req.params;
     const { data, error } = await supabase
         .from('Multimedia')
-        .select('*')
+        // Selecciona 'tipo' y 'url' y renombra 'url' a 'src'
+        .select('tipo, url, descripcion') 
         .eq('relacionadoCon', 'Actividad')
         .eq('idRelacionado', id);
+        
     if (error) return res.status(500).json(error);
-    res.json(data);
+    
+    // Mapea la columna 'url' a 'src' para que Vue lo entienda
+    const slides = data.map(item => ({
+        tipo: item.tipo,
+        src: item.url, // Renombra la columna 'url' de la BD a 'src' para Vue
+        alt: item.descripcion || item.tipo, // Usa la descripción como texto alternativo
+    }));
+    
+    res.json(slides);
 });
 export default router;

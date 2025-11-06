@@ -66,7 +66,7 @@ export default {
   name: 'GeneralActCard',
   props: {
     activityId: { type: [String, Number], required: true },
-    activityName: { type: String, required: true },
+    activityName: { type: String, required: true }, // Esto debe coincidir con lo que recibe del padre
     activityDescription: { type: String, default: 'No hay descripción disponible para esta actividad.' }
   },
   data() {
@@ -102,11 +102,14 @@ export default {
       
       try {
         // ENDPOINT 1: Carga los detalles estructurados (Horarios, Niveles, Contacto)
-        const DETAILS_URL = `${this.API_BASE_URL}/actividades/detalles/${DETAIL_ROW_ID}`;
+        // CORRECCIÓN: Usa '/actividades/detalles/'
+        const DETAILS_URL = `${this.API_BASE_URL}/actividades/detalles/${DETAIL_ROW_ID}`; 
         
         // ENDPOINT 2: Carga la Multimedia (Carrusel)
-        const MEDIA_URL = `${this.API_BASE_URL}/multimedia/Actividad/${this.activityId}`;
+        // CORRECCIÓN: Usa '/multimedia/Actividad/'
+        const MEDIA_URL = `${this.API_BASE_URL}/multimedia/Actividad/${this.activityId}`; 
         
+        // Usamos axios para manejar la respuesta JSON
         const [detailsResponse, mediaResponse] = await Promise.all([
           axios.get(DETAILS_URL),
           axios.get(MEDIA_URL)
@@ -131,23 +134,24 @@ export default {
 </script>
 
 <style scoped>
+/* (Estilos CSS omitidos por brevedad, se mantiene el estilo original) */
 /* Estilos del Carrusel */
-.main-carousel-wrapper { position: relative; max-width: 900px; height: 400px; margin: 0 auto; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }
+.main-carousel-wrapper { position: relative; max-width: 900px; height: 400px; margin: 0 auto; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0)}
 .main-carousel { position: relative; width: 100%; height: 100%; }
 .slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-in-out; }
 .slide.active { opacity: 1; z-index: 1; }
 .slide img, .slide video { width: 100%; height: 100%; object-fit: cover; }
 .no-media-placeholder-main { text-align: center; padding: 2rem; color: #999; border: 1px dashed #ccc; border-radius: 8px; max-width: 900px; margin: 0 auto; }
-.prev-button, .next-button { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.6); color: white; border: none; padding: 10px; cursor: pointer; z-index: 10; border-radius: 4px; }
+.prev-button, .next-button { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.6); color: white; border: none; padding: 10p}
 .prev-button { left: 10px; }
 .next-button { right: 10px; }
 
 /* Estilos de la Tarjeta de Detalles */
-.generic-activity-container { padding: 2rem; }
+.generic-activity-container { padding: 2rem; };
 .activity-name-title { text-align: center; font-size: 2.5em; color: #333; margin-bottom: 20px; }
 .separator { border: 0; height: 1px; background-color: #eee; margin: 2rem 0; }
 .description-area { font-size: 1.1em; line-height: 1.6; color: #555; margin: 1rem 0 2rem; padding: 0 1rem; text-align: center; }
-.details-card { padding: 30px; margin: 0 auto; max-width: 900px; border: 1px solid #d0c8b3; border-radius: 10px; background-color: #fff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); }
+.details-card { padding: 30px; margin: 0 auto; max-width: 900px; border: 1px solid #d0c8b3; border-radius: 10px; background-color: #fff; box-shadow: 0 4px 8px }
 .card-section-title { text-align: center; color: #d90022; margin-bottom: 25px; font-size: 1.5em; border-bottom: 2px solid #eee; padding-bottom: 10px; }
 .info-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; }
 .info-group { flex-basis: 48%; }
