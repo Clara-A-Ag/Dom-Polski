@@ -1,5 +1,4 @@
 <template>
-  <h2>Ballet Aguila Blanca</h2>
   <div class="carousel-container">
     <div class="carousel-slides">
       <div 
@@ -41,12 +40,11 @@ export default {
       
       // 2. Datos de las diapositivas
       slidesData: [
-        { type: 'image', src: '/assets/ballet adulto.JPEG', alt: 'Traje típico 1' },
+              { type: 'image', src: '/assets/ballet adulto.JPEG', alt: 'Traje típico 1' },
 { type: 'image', src: '/assets/ballet niños.JPEG', alt: 'Traje típico 2' },
 { type: 'image', src: '/assets/ballet adulto2.JPEG', alt: 'Traje típico 3' },
 { type: 'image', src: '/assets/ballet niños1.jpeg', alt: 'Traje típico 4' },
 { type: 'image', src: '/assets/ballet adulto1.JPEG', alt: 'Foto de ballet' }
-  
       ],
     };
   },
@@ -104,20 +102,14 @@ export default {
 </script>
 
 <style scoped>
-h2 {
-    text-align: center;
-    padding-top: 25px;
-    padding-bottom: 6px;
-    font-size: 50px;
-    color: #333;
-}
+/* Copia y pega el mismo CSS del ejemplo anterior (style.css) aquí o en un archivo aparte.
+   Asegúrate de mantener el 'scoped' si lo usas en un archivo .vue. */
 .carousel-container {
     position: relative;
     max-width: 800px;
     margin: 50px auto;
     overflow: hidden;
     border: 1px solid #ccc;
-    border-radius: 25px;
 }
 
 .carousel-slides {
@@ -161,4 +153,3 @@ h2 {
 .prev-button { left: 10px; }
 .next-button { right: 10px; }
 </style>
-  
