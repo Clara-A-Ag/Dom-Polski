@@ -26,49 +26,57 @@ export default {
 <style scoped>
 .section {
   background-color: #fffffe;
-  padding: 10px 10px;
+  padding: 20px 10px; /* Un poco más de aire */
   text-align: center;
 }
 
 .title {
   font-size: 2.5em;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 30px; /* Más espacio */
   font-family: 'ubuntu', sans-serif;
   border-bottom: 3px solid #9d1414;
   display: inline-block;
   padding-bottom: 5px;
 }
 
+/* 1. CAMBIO: Mobile-First
+  Por defecto, es una columna.
+*/
 .content-container {
   display: flex;
+  flex-direction: column; /* Apilado en móvil */
   max-width: 1000px;
   margin: 0 auto;
   gap: 30px;
-  align-items: flex-start;
 }
 
+/* 2. CAMBIO: El texto ahora es 'order: 2'
+  (Irá debajo de las imágenes en móvil)
+*/
 .text {
-  flex: 1;
   font-size: 1.2em;
   line-height: 1.6;
   color: #555;
   text-align: left;
   font-family: 'Ubuntu', sans-serif;
+  order: 2; /* Texto debajo */
 }
 
+/* 3. CAMBIO: Las imágenes son 'order: 1'
+  (Irán arriba en móvil)
+*/
 .image-grid {
-  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  order: 1; /* Imágenes arriba */
 }
 
 .grid-img {
   width: 100%;
-  max-width: 100%;   /* Asegura que no crezcan más allá de su tamaño original */
-  height: 200px;     /* O define una altura mínima si quieres mantener consistencia visual */
-  object-fit: cover; /* Recorta para llenar el espacio sin deformar */
+  height: 250px; /* Un poco más de altura */
+  object-fit: cover; /* Clave para que no se deforme */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -76,12 +84,34 @@ export default {
 .small-images {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 20px; /* Más espacio */
 }
 
 .small-img {
   width: 100%;
+  height: 150px; /* Altura fija para consistencia */
+  object-fit: cover; /* Clave para la bandera/logo */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 4. LA MAGIA:
+  Cuando la pantalla sea más grande de 768px...
+*/
+@media (min-width: 768px) {
+  .content-container {
+    flex-direction: row; /* Volvemos al layout de fila */
+    align-items: flex-start;
+  }
+
+  .text {
+    flex: 2; /* <-- ¡AQUÍ ESTÁ! El texto ocupa 2/3 */
+    order: 1; /* Texto a la izquierda */
+  }
+
+  .image-grid {
+    flex: 1; /* <-- Las imágenes ocupan 1/3 */
+    order: 2; /* Imágenes a la derecha */
+  }
 }
 </style>

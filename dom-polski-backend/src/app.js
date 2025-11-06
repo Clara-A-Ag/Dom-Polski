@@ -10,7 +10,7 @@ import miembrosRoutes from './routes/miembros.routes.js';
 import multimediaRoutes from './routes/multimedia.routes.js';
 import contactoRoutes from './routes/contacto.routes.js';
 import recetasRoutes from './routes/recetas.routes.js';
-import detalleACT from './src/routes/detalleACT.routes.js';
+import detalleACT from './routes/detalleACT.routes.js';
 
 const app = express();
 app.use(cors());
