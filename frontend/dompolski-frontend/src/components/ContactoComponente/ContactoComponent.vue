@@ -57,33 +57,44 @@
   </div>
 </template>
 
-
-<script>
-
-
-
-
+<script setup>
+// Sigue sin necesitar script, es solo presentación.
 </script>
 
 <style scoped>
-.img2{
-    display: flex;
-background-color: #f2efff;
-justify-content: space-between; /* Distribuye el espacio entre los elementos */
-align-items: center; /* Alinea verticalmente los elementos al centro (opcional) */
-    
+/* 2. CAMBIO DE CSS:
+  El contenedor principal ahora es 'row' en desktop
+  y 'column' en mobile.
+*/
+.contacto-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff; /* <--- AHORA ES BLANCO */
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-img{
-    width: 150px;
-    height: 250px;
-    margin: 1px;
-    display: flex; /* Convierte el contenedor en un flex container */
 
+/* Estilos del contenido (Columna 2) */
+.contenido-contacto {
+  text-align: center;
+  max-width: 800px;
+  margin: 2rem 0; /* Espacio vertical en móvil */
+  order: 2; /* Orden en móvil (imágenes arriba y abajo) */
 }
-.img-polaco2{
-    justify-content: left;
-    align-items: left;
-    padding-left: 25px;
+
+.contenido-contacto h2 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.contenido-contacto p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 1rem;
 }
 
 .contenido-contacto h3 {
@@ -163,12 +174,11 @@ img[alt*="Niña"] {
   }
 
   /* Las columnas de imágenes */
-/* POR ESTO: */
-.img-decorativa {
-  flex-basis: 20%;
-  max-width: 250px;
-  height: 400px; /* <--- ALTURA FIJA (MÁS GRANDE) PARA DESKTOP */
-}
+  .img-decorativa {
+    flex-basis: 20%;
+    max-width: 250px;
+    height: 400px; /* <--- ALTURA FIJA (MÁS GRANDE) PARA DESKTOP */
+  }
   
   img[alt*="Grupo"] {
     order: 1; /* Niño a la izquierda */
