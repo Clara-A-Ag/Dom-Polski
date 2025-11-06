@@ -39,11 +39,11 @@
 // Importa SOLO los componentes con lógica especial y el componente genérico
 import Idioma from './Idioma.vue';
 import Cocina from './Cocina.vue';
-import GenericActivityCard from './GenericActivityCard.vue'; // Renombré 'GeneralActCard' a 'GenericActivityCard'
+import GeneralActCard from './GeneralActCard.vue'; 
 
 export default {
   name: 'ActividadesSection',
-  components: { Idioma, Cocina, GenericActivityCard },
+  components: { Idioma, Cocina, GeneralActCard },
   data() {
     return {
       activities: [], 
@@ -73,11 +73,11 @@ export default {
         
         // Si NO está mapeado (ej: Ballet o cualquier actividad futura), usar el genérico.
         if (!ComponentToRender) {
-            ComponentToRender = GenericActivityCard;
+            ComponentToRender = GeneralActCard;
         }
 
         // 2. Si se usa la plantilla genérica, devolver la configuración con props.
-        if (ComponentToRender === GenericActivityCard) {
+        if (ComponentToRender === GeneralActCard) {
             return {
                 component: ComponentToRender,
                 props: {

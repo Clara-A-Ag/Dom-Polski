@@ -63,7 +63,7 @@
 import axios from 'axios';
 
 export default {
-  name: 'GenericActivityCard',
+  name: 'GeneralActCard',
   props: {
     activityId: { type: [String, Number], required: true },
     activityName: { type: String, required: true },
