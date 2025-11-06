@@ -2,7 +2,7 @@
    <h2 class="carousel-title">Ballet Aguila Blanca</h2>
   <div class="carousel-container">
 
-    <div v-if="slidesData.length > 0" class="carousel-slides">
+    <div v-if="slidesData.length > 0" class="carousel-slides" ref="carouselContainer">
       <div 
         v-for="(slide, index) in slidesData" 
         :key="index" 
@@ -65,8 +65,19 @@ export default {
 
     // La función handleMediaPlayback también se mantiene igual
     handleMediaPlayback() {
-        const slides = this.$el.querySelectorAll('.slide');
-        slides.forEach((slideEl, index) => {
+      const container = this.$refs.carouselContainer; 
+
+    // Verificamos si la referencia existe antes de intentar consultarla
+    if (!container) {
+        // Esto puede ocurrir si el componente aún no se ha renderizado
+        console.warn("Advertencia: El contenedor del carrusel no está disponible.");
+        return; 
+    }
+
+    // Ahora usamos el contenedor referenciado para la consulta
+    const slides = container.querySelectorAll('.slide');
+
+    slides.forEach((slideEl, index) => {
             const video = slideEl.querySelector('video');
             if (video) {
                 if (index === this.currentSlideIndex) {
@@ -77,6 +88,7 @@ export default {
                     video.pause();
                     video.currentTime = 0;
                 }
+                const video = slideEl.querySelector('video');
             }
         });
     },
