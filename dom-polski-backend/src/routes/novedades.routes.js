@@ -4,47 +4,35 @@ import { supabase } from '../config/supabaseClient.js';
 const router = Router();
 
 // --- SÚPER ENDPOINT PARA LA VISTA DE "NOVEDADES" ---
-// Acepta: ?page=X&limit=Y&search=Z
+// (Este ya estaba bien, lo dejamos como está)
 router.get('/', async (req, res) => {
-  // 1. Leemos los query params (con valores por defecto)
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 5; // 5 noticias por página
-  const search = req.query.search || ''; // Término de búsqueda
+  const limit = parseInt(req.query.limit) || 5; 
+  const search = req.query.search || ''; 
   
-  // 2. Calculamos el rango para Supabase
-  // (Página 1, Límite 5) -> Rango 0 al 4
-  // (Página 2, Límite 5) -> Rango 5 al 9
   const from = (page - 1) * limit;
   const to = from + limit - 1;
 
-  // 3. Construimos la consulta base
   let query = supabase
     .from('Novedad')
-    .select('*', { count: 'exact' }) // ¡Pedimos el conteo total!
+    .select('*', { count: 'exact' }) 
     .order('fechaPublicacion', { ascending: false });
 
-  // Opcional: Si no quieres que las temporales salgan en la lista general
   query = query.eq('esTemporal', false); 
 
-  // 4. Añadimos el filtro de BÚSQUEDA (si 'search' no está vacío)
   if (search) {
-    // Busca 'search' en 'titulo' O 'descripcionCorta'
-    // 'ilike' no distingue mayúsculas/minúsculas
     query = query.or(`titulo.ilike.%${search}%,descripcionCorta.ilike.%${search}%`);
   }
   
-  // 5. Añadimos el filtro de PAGINACIÓN
   query = query.range(from, to);
 
-  // 6. Ejecutamos la consulta
   const { data, error, count } = await query;
 
   if (error) return res.status(500).json({ error: error.message });
 
-  // 7. Enviamos la respuesta con los datos y el conteo total
   res.json({
-    data: data,           // Los 5 resultados de esta página
-    totalCount: count     // El número total de noticias que coincidieron
+    data: data,       
+    totalCount: count  
   });
 });
 
@@ -52,47 +40,69 @@ router.get('/', async (req, res) => {
 // --- ENDPOINTS ADICIONALES (para InicioVista, etc.) ---
 
 // Endpoint 2: Obtener Novedades Temporales (Sucesos)
+// ¡MODIFICADO CON LIMIT!
 router.get('/temporales', async (req, res) => {
-  const { data, error } = await supabase
+  // 1. Leemos el query param 'limit'
+  const { limit } = req.query;
+
+  // 2. Construimos la consulta base
+  let query = supabase
     .from('Novedad')
     .select('*')
     .eq('esTemporal', true)
-    // .gte('fechaExpiracion', new Date().toISOString()) // Descomentar para filtrar expiradas
+    // .gte('fechaExpiracion', new Date().toISOString()) 
     .order('fechaPublicacion', { ascending: false });
 
+  // 3. Si nos pasaron un 'limit', lo añadimos
+  if (limit) {
+    query = query.limit(parseInt(limit));
+  }
+
+  // 4. Ejecutamos
+  const { data, error } = await query;
+
   if (error) return res.status(500).json({ error: error.message });
-  res.json(data); // Nota: Esto devuelve un Array, no un objeto {data, totalCount}
+  res.json(data); 
 });
 
 
 // Endpoint 3: Obtener destacadas
+// ¡MODIFICADO CON LIMIT!
 router.get('/destacadas', async (req, res) => {
-  const { data, error } = await supabase
+  // 1. Leemos el query param 'limit'
+  const { limit } = req.query;
+
+  // 2. Construimos la consulta base
+  let query = supabase
     .from('Novedad')
     .select('*')
     .eq('destacada', true)
     .order('fechaPublicacion', { ascending: false });
 
+  // 3. Si nos pasaron un 'limit', lo añadimos
+  if (limit) {
+    query = query.limit(parseInt(limit));
+  }
+
+  // 4. Ejecutamos
+  const { data, error } = await query;
+
   if (error) return res.status(500).json({ error: error.message });
-  res.json(data); // Nota: Esto devuelve un Array
+  res.json(data); 
 });
 
 // Endpoint 4: Obtener UNA noticia por su ID
-// Esta ruta debe ir DESPUÉS de /temporales y /destacadas
-// para que no confunda ':id' con 'temporales'.
+// (Este ya estaba bien, lo dejamos como está)
 router.get('/:id', async (req, res) => {
-  // 1. Leemos el ID de los parámetros de la URL
   const { id } = req.params;
 
-  // 2. Pedimos a Supabase UN solo registro
   const { data, error } = await supabase
     .from('Novedad')
     .select('*')
     .eq('id', id)
-    .single(); // .single() es la clave: nos da un objeto, no un array
+    .single(); 
 
   if (error) {
-    // Si no lo encuentra, .single() da un error
     return res.status(404).json({ error: 'Noticia no encontrada' });
   }
 
