@@ -1,155 +1,186 @@
 <template>
+   <h2 class="carousel-title">Ballet Aguila Blanca</h2>
   <div class="carousel-container">
-    <div class="carousel-slides">
+
+    <div v-if="slidesData.length > 0" class="carousel-slides">
       <div 
         v-for="(slide, index) in slidesData" 
         :key="index" 
         class="slide"
         :class="{ active: index === currentSlideIndex }"
       >
-        <img 
-          v-if="slide.type === 'image'" 
-          :src="slide.src" 
-          :alt="slide.alt" 
-        />
-        <video 
-          v-else-if="slide.type === 'video'" 
-          controls 
-          muted 
-          autoplay 
-          loop
-          :src="slide.src"
-        >
+        <img v-if="slide.type === 'image'" :src="slide.src" :alt="slide.alt" />
+        <video v-else-if="slide.type === 'video'" controls muted autoplay loop playsinline :src="slide.src">
           Tu navegador no soporta el tag de video.
         </video>
       </div>
-    </div>
 
-    <button class="prev-button" @click="prevSlide">Anterior</button>
-    <button class="next-button" @click="nextSlide">Siguiente</button>
+      <template v-if="slidesData.length > 1">
+        <button class="prev-button" @click="prevSlide">Anterior</button>
+        <button class="next-button" @click="nextSlide">Siguiente</button>
+      </template>
+    </div>
+    
+    <div v-else class="empty-message">
+      No hay elementos multimedia definidos en el frontend.
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MediaCarousel',
+  name: 'BalletVue',
   data() {
     return {
-      // 1. Estado para rastrear la diapositiva actual
       currentSlideIndex: 0,
-      
-      // 2. Datos de las diapositivas
+      // *** 1. DEFINIMOS LOS DATOS AQUÍ DIRECTAMENTE ***
       slidesData: [
-              { type: 'image', src: '/assets/ballet adulto.JPEG', alt: 'Traje típico 1' },
-{ type: 'image', src: '/assets/ballet niños.JPEG', alt: 'Traje típico 2' },
-{ type: 'image', src: '/assets/ballet adulto2.JPEG', alt: 'Traje típico 3' },
-{ type: 'image', src: '/assets/ballet niños1.jpeg', alt: 'Traje típico 4' },
-{ type: 'image', src: '/assets/ballet adulto1.JPEG', alt: 'Foto de ballet' }
+        { type: 'image', src: '/assets/ballet adulto.JPEG',alt: 'Foto de adultos de ballet' },
+        { type: 'image', src: '/assets/ballet niños.JEPG', alt: 'Foto de niños de ballet' },
+        { type: 'video',  src: '/frontend/dompolski-frontend/public/assets/ballet adulyto4.MP4', alt: 'Video promocional' },
+        { type: 'image', src: '/assets/ballet niños1.JEPG', alt: 'Foto de niños de ballet' },
+        { type: 'image', src: '/assets/ballet.JEPG', alt: 'Foto de niños con trajes' },
+        { type: 'image', src: '/assets/ballet adulto1.JEPG', alt: 'Foto de adultos de ballet' },
+        { type: 'image', src: '/assets/ballet adulto2.JEPG', alt: 'Foto de adultos de ballet' },
       ],
     };
   },
   computed: {
-    // 3. Propiedad calculada para obtener el número total de diapositivas
     totalSlides() {
       return this.slidesData.length;
     }
   },
   methods: {
-    // 4. Método para avanzar a la siguiente diapositiva
     nextSlide() {
-      // Usamos el operador módulo (%) para envolver el índice:
-      // (actual + 1) % total -> Si llega al final, vuelve a 0.
+      if (this.totalSlides === 0) return;
       this.currentSlideIndex = (this.currentSlideIndex + 1) % this.totalSlides;
-      this.$nextTick(this.handleMediaPlayback); // Asegura que el DOM se actualice antes de manejar la reproducción
+      this.handleMediaPlayback();
     },
 
-    // 5. Método para retroceder a la diapositiva anterior
     prevSlide() {
-      // Manejamos el caso negativo para volver a la última diapositiva.
+      if (this.totalSlides === 0) return;
       this.currentSlideIndex = (this.currentSlideIndex - 1 + this.totalSlides) % this.totalSlides;
-      this.$nextTick(this.handleMediaPlayback);
+      this.handleMediaPlayback();
     },
 
-    // 6. Lógica de reproducción/pausa de video (adaptada a Vue)
+    // La función handleMediaPlayback también se mantiene igual
     handleMediaPlayback() {
-        // En Vue, es mejor usar referencias para acceder al DOM directamente,
-        // pero podemos usar querySelectorAll si es un componente autocontenido.
         const slides = this.$el.querySelectorAll('.slide');
-
         slides.forEach((slideEl, index) => {
             const video = slideEl.querySelector('video');
-
             if (video) {
                 if (index === this.currentSlideIndex) {
-                    // Si es la diapositiva activa, intentar reproducir
                     video.play().catch(error => {
-                        console.warn("Error al reproducir video:", error);
+                        console.warn("Advertencia: No se pudo reproducir el video automáticamente.", error);
                     });
                 } else {
-                    // Si no es la activa, pausar y rebobinar
                     video.pause();
                     video.currentTime = 0;
                 }
             }
         });
-    }
+    },
   },
-  // Opcional: Ejecutar al montar para asegurar que el primer video se reproduzca si lo hay
+  // *** 2. Usamos el hook created para inicializar, o mounted ***
   mounted() {
-      this.handleMediaPlayback();
+    this.handleMediaPlayback();
   }
 };
 </script>
 
 <style scoped>
-/* Copia y pega el mismo CSS del ejemplo anterior (style.css) aquí o en un archivo aparte.
-   Asegúrate de mantener el 'scoped' si lo usas en un archivo .vue. */
+/* Estilos del contenedor principal */
 .carousel-container {
     position: relative;
-    max-width: 800px;
+    max-width: 800px; /* Ajusta según tu diseño */
     margin: 50px auto;
-    overflow: hidden;
-    border: 1px solid #ccc;
+    padding: 0;
+    overflow: hidden; 
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
 }
 
+.carousel-title {
+    text-align: center;
+    padding-top: 20px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 2rem;
+}
+
+/* Contenedor de diapositivas */
 .carousel-slides {
     position: relative;
-    height: 450px;
+    height: 450px; /* Altura fija, ajusta según necesidad */
 }
 
+/* Estilo de cada diapositiva */
 .slide {
     position: absolute;
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out; /* Efecto de fundido */
+    display: flex; /* Asegura que el contenido se centre/ajuste */
+    justify-content: center;
+    align-items: center;
 }
 
-/* La clave de Vue: la clase 'active' se añade reactivamente */
+/* Clase activa (muestra la diapositiva) */
 .slide.active {
     opacity: 1; 
-    /* Importante: para videos, asegúrate que 'video.play()' se ejecuta 
-       al aplicar esta clase, lo cual manejamos en `handleMediaPlayback`. */
+    z-index: 1;
 }
 
+/* Estilos de contenido multimedia */
 .slide img, .slide video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Recorta si es necesario para cubrir el área */
 }
 
+/* Estilos de los botones de navegación */
 .prev-button, .next-button {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     padding: 10px 15px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(139, 0, 0, 0.7); /* Rojo adaptado a tu diseño */
     color: white;
     border: none;
     cursor: pointer;
+    font-size: 16px;
     z-index: 10;
+    transition: background-color 0.2s;
+    border-radius: 10px;
 }
 
-.prev-button { left: 10px; }
-.next-button { right: 10px; }
+.prev-button:hover, .next-button:hover {
+    background: rgba(139, 0, 0, 0.9);
+}
+
+.prev-button {
+    left: 10px;
+}
+
+.next-button {
+    right: 10px;
+}
+
+/* Mensajes de estado */
+.loading-message, .error-message, .empty-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1em;
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+.error-message {
+    color: darkred;
+    background-color: #ffe0e0;
+    border: 1px solid darkred;
+}
 </style>
