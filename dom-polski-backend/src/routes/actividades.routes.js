@@ -34,34 +34,43 @@ router.get('/', async (req, res) => {
         return res.status(500).json({ error: 'Excepción interna.' });
     }
 });
+// routes/actividades.routes.js (SEGUNDO ENDPOINT)
 
-
-// 2. ENDPOINT: GET /actividades/detalles/:id (Detalles para GeneralActCard)
 router.get('/detalles/:id', async (req, res) => {
     const actividadId = req.params.id;
     
     try {
-        // Se busca en detalleACT por el actividadId de la actividad
+        // --- 1. VERIFICAR: Nombre de la tabla y filtro 'actividadId' ---
         const { data, error } = await supabase
-            .from('detalleACT')
-            .select('nombre, horarios, niveles, edades, contacto')
-            .eq('actividadId', actividadId)
-            .maybeSingle(); // Usamos maybeSingle ya que asumimos 1 detalle por actividad
+            .from('detalleACT') // <-- ¡Verifica que la tabla se llame EXACTAMENTE 'detalleACT'!
+            .select('nombre, horarios, niveles, edades, contacto') // <-- ¡Verifica los nombres de estas columnas!
+            .eq('actividadId', actividadId) // <-- ¡Verifica que la columna se llame EXACTAMENTE 'actividadId'!
+            .maybeSingle(); 
 
         if (error) {
-            console.error("Error al obtener detalles:", error);
-            return res.status(500).json({ error: error.message });
+            console.error("Error de Supabase al obtener detalles:", error);
+            // Si Supabase devuelve un error, lo enviamos de vuelta con 500
+            return res.status(500).json({ error: error.message }); 
         }
         
-        // Si no se encuentra, devolvemos un objeto vacío para evitar errores
+        // --- 2. VERIFICAR: Caso sin datos ---
+        // Si no hay detalles para esa actividad (ej. Ballet ID 3 aún no tiene fila en detalleACT)
         if (!data) {
-            return res.json({});
+            // Devolvemos un 200 OK con un objeto vacío (o con valores por defecto)
+            // Esto evita que Vue se rompa y lo maneja como "sin detalles"
+            return res.status(200).json({
+                detailName: "N/A",
+                schedule: "Sin información de horarios",
+                levels: "N/A",
+                ageGroup: "N/A",
+                contactInfo: "N/A",
+            });
         }
 
-        // Mapeamos los campos de la BD a los nombres de props de Vue (GeneralActCard)
+        // --- 3. VERIFICAR: Mapeo de campos a GeneralActCard.vue ---
         const mappedDetails = {
             detailName: data.nombre,
-            schedule: data.horarios,
+            schedule: data.horarios, // Vue lo espera como activityDetails.schedule
             levels: data.niveles,
             ageGroup: data.edades,
             contactInfo: data.contacto,
@@ -70,9 +79,11 @@ router.get('/detalles/:id', async (req, res) => {
         return res.json(mappedDetails);
 
     } catch (e) {
-        console.error("Excepción al obtener detalles:", e);
-        return res.status(500).json({ error: 'Excepción interna.' });
+        // Este catch atrapa errores fuera de Supabase (ej. problema de JSON o excepción de código)
+        console.error("Excepción en router de detalles:", e); 
+        return res.status(500).json({ error: 'Excepción interna no controlada.' });
     }
 });
+
 
 export default router;
