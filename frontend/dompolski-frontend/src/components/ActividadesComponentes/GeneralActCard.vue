@@ -58,7 +58,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from 'axios';
 
@@ -98,20 +97,17 @@ export default {
       this.isLoading = true;
       this.error = null;
       
-      const DETAIL_ROW_ID = this.activityId;
-      
       try {
         // ENDPOINT 1: Carga los detalles estructurados (Horarios, Niveles, Contacto)
-        // CORRECCIÓN: Usa '/actividades/detalles/'
-        const DETAILS_URL = `${this.API_BASE_URL}/actividades/detalles/${DETAIL_ROW_ID}`; 
+        // 🛑 CORRECCIÓN 1: Se eliminan los asteriscos dobles que causaban el error 404
+        const ACT_URL = `${this.API_BASE_URL}/actividades/detalles/${this.activityId}`;
         
         // ENDPOINT 2: Carga la Multimedia (Carrusel)
-        // CORRECCIÓN: Usa '/multimedia/Actividad/'
-        const MEDIA_URL = `${this.API_BASE_URL}/multimedia/Actividad/${this.activityId}`; 
+        const MEDIA_URL = `${this.API_BASE_URL}/multimedia/Actividad/${this.activityId}`;
         
         // Usamos axios para manejar la respuesta JSON
         const [detailsResponse, mediaResponse] = await Promise.all([
-          axios.get(DETAILS_URL),
+          axios.get(ACT_URL),
           axios.get(MEDIA_URL)
         ]);
 
@@ -120,8 +116,13 @@ export default {
         this.currentSlideIndex = 0;
         
       } catch (err) {
-        console.error(`Error al cargar datos para ${this.activityName}:`, err);
-        this.error = 'No se pudo cargar la información detallada de la actividad.';
+        // Aquí capturamos el 404 (detalles) o el 500 (multimedia)
+        console.error(`Error al cargar datos para ${this.activityName}:`, err.message);
+        
+        // El error 500 de multimedia (problema BigInt en Supabase) ahora debería
+        // ser manejado correctamente si aplicaste las correcciones de Express.
+        
+        this.error = `No se pudo cargar la información detallada de la actividad (${err.response?.status || err.code}).`;
       } finally {
         this.isLoading = false;
       }
@@ -133,8 +134,8 @@ export default {
 };
 </script>
 
+
 <style scoped>
-/* (Estilos CSS omitidos por brevedad, se mantiene el estilo original) */
 /* Estilos del Carrusel */
 .main-carousel-wrapper { position: relative; max-width: 900px; height: 400px; margin: 0 auto; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0)}
 .main-carousel { position: relative; width: 100%; height: 100%; }

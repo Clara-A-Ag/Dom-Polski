@@ -11,7 +11,14 @@ import multimediaRoutes from './routes/multimedia.routes.js';
 import contactoRoutes from './routes/contacto.routes.js';
 import recetasRoutes from './routes/recetas.routes.js';
 import detalleACT from './routes/detalleACT.routes.js';
+import cursosRoutes from './routes/cursos.routes.js';
 
+
+if (typeof BigInt.prototype.toJSON !== 'function') {
+  BigInt.prototype.toJSON = function() {
+    return this.toString();
+  };
+}
 const app = express();
 const PORT = 3000;
 app.use(cors());
@@ -25,6 +32,7 @@ app.use('/miembros', miembrosRoutes);
 app.use('/multimedia', multimediaRoutes);
 app.use('/contacto', contactoRoutes);
 app.use('/recetas', recetasRoutes);
+app.use('/cursos', cursosRoutes); 
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });

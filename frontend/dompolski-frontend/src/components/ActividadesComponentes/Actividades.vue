@@ -24,29 +24,34 @@
       </div>
         
       <div class="content">
+        <!-- El componente activo ahora está marcado como 'raw', eliminando el warning de Vue -->
         <component :is="activeComponent.component" v-bind="activeComponent.props || {}"></component>
       </div>
     </div>
   </section>
 </template>
-
 <script>
+// ⚠️ IMPORTANTE: Se importa markRaw para evitar que Vue intente hacer reactivos a los componentes
+import { markRaw } from 'vue'; 
 import Idioma from './Idioma.vue';
 import Cocina from './Cocina.vue';
 import GeneralActCard from './GeneralActCard.vue';
 
 export default {
   name: 'ActividadesSection',
+  // 💡 CORRECCIÓN 2: No necesitas marcar los componentes en 'components',
+  // pero sí en 'componentMap' y 'activeComponent' si se asignan a estado reactivo.
   components: { Idioma, Cocina, GeneralActCard},
   data() {
+    // 💡 CORRECCIÓN 2: Almacenamos los componentes en el mapa como 'raw'
+    // para que Vue no intente rastrear su reactividad y lance el warning.
     return {
       activities: [], 
       activeTab: null,
       
-      
       componentMap: {
-        'Idioma': Idioma,
-        'Cocina': Cocina,
+        'Idioma': markRaw(Idioma),
+        'Cocina': markRaw(Cocina),
       },
       API_BASE_URL: 'http://localhost:3000',
     };
@@ -63,9 +68,9 @@ export default {
         // 1. Determinar qué componente usar (especial o genérico)
         let ComponentToRender = this.componentMap[activityName];
         
-        // Si NO está mapeado, usar el genérico. Esto incluye a Ballet y futuras actividades.
+        // Si NO está mapeado, usar el genérico. También lo marcamos como raw.
         if (!ComponentToRender) {
-            ComponentToRender = GeneralActCard;
+            ComponentToRender = markRaw(GeneralActCard); // Marcamos el componente genérico también
         }
 
         // 2. Si es la plantilla genérica, devolver la configuración con props.
@@ -80,7 +85,7 @@ export default {
             };
         }
         
-        // 3. Devolver el componente especial (Idioma o Cocina)
+        // 3. Devolver el componente especial (Idioma o Cocina), que ya está marcado como raw en data()
         return { component: ComponentToRender, props: {} }; 
     }
   },
@@ -88,10 +93,10 @@ export default {
     selectTab(activityId) {
       this.activeTab = activityId;
     },
-   
+    
     
     async fetchActivitiesFromBSDS() {
-    
+      
       try {
         const ENDPOINT = '/actividades';
 
@@ -121,8 +126,8 @@ export default {
 </script>
 <style scoped>
 /* --------------------
-   1. Variables de Diseño y Colores
-   -------------------- */
+    1. Variables de Diseño y Colores
+    -------------------- */
 :root {
     --color-primario: #d90022; 
     --color-texto: #333;
@@ -135,8 +140,8 @@ export default {
 }
 
 /* --------------------
-   2. Maquetación Principal y Fuente
-   -------------------- */
+    2. Maquetación Principal y Fuente
+    -------------------- */
 .section { display: block; position: relative; padding: 0; }
 .main-content-area {
     display: flex;
@@ -146,8 +151,8 @@ export default {
 }
 
 /* --------------------
-   3. Contenedor del Menú (sidebar-wrapper)
-   -------------------- */
+    3. Contenedor del Menú (sidebar-wrapper)
+    -------------------- */
 .sidebar-wrapper {
     background-color: #efedd6;
     display: flex;
@@ -170,8 +175,8 @@ export default {
 }
 
 /* --------------------
-   4. Estilos del Menú Lateral (.sidebar) - ANCHO FIJO
-   -------------------- */
+    4. Estilos del Menú Lateral (.sidebar) - ANCHO FIJO
+    -------------------- */
 .sidebar {
     /* Estado FIJO, ancho suficiente para texto e ícono */
     width: 200px; 
@@ -186,8 +191,8 @@ export default {
 .sidebar__list { list-style: none; margin: 0; padding: 0; }
 
 /* --------------------
-   5. Estilos de Ítems y Activo
-   -------------------- */
+    5. Estilos de Ítems y Activo
+    -------------------- */
 .sidebar__item {
     height: var(--item-height);
     transition: background-color 0.2s;
@@ -222,8 +227,8 @@ export default {
 }
 
 /* --------------------
-   6. Contenedor del Contenido
-   -------------------- */
+    6. Contenedor del Contenido
+    -------------------- */
 .content {
     flex-grow: 1; 
     padding: var(--padding-base); 
