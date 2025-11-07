@@ -85,7 +85,7 @@ import axios from 'axios';
 
 // --- PROPS Y DATOS BASE ---
 const props = defineProps({
-  activityId: { type: [String, Number], default: 3 } 
+  activityId: { type: [String, Number], default: 4 } 
 });
 
 const API_BASE_URL = 'http://localhost:3000';
@@ -136,7 +136,7 @@ const mappedRecipes = computed(() => {
         nombre: recipe.titulo,
         imagenUrl: recipe.imagenUrl || 'url_imagen_por_defecto.jpg', 
         ingredientes: parseIngredients(recipe.ingredientes), 
-        preparacion: parsePreparation(recipe.instrucciones), 
+        preparacion: parsePreparation(recipe.preparacion), 
     }));
 });
 
@@ -301,6 +301,11 @@ onMounted(() => {
     box-sizing: border-box;
     overflow-y: auto; 
     transition: all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+.card-receta.expandida .detalle {
+    opacity: 1;         /* ✅ Visible */
+    transform: scale(1); /* ✅ Tamaño normal */
+    pointer-events: auto;
 }
 
 .boton-cerrar {
