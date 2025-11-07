@@ -30,85 +30,101 @@
     </div>
   </section>
 </template>
+
 <script>
-// ⚠️ IMPORTANTE: Se importa markRaw para evitar que Vue intente hacer reactivos a los componentes
-import { markRaw } from 'vue'; 
+import { markRaw } from 'vue';
 import Idioma from './Idioma.vue';
 import Cocina from './Cocina.vue';
 import GeneralActCard from './GeneralActCard.vue';
 
+// 1. ¡NUESTRO CLIENTE API!
+import apiClient from '@/services/api'; // Asumiendo que está en @/api.js o @/api/index.js
+
 export default {
   name: 'ActividadesSection',
-  // 💡 CORRECCIÓN 2: No necesitas marcar los componentes en 'components',
-  // pero sí en 'componentMap' y 'activeComponent' si se asignan a estado reactivo.
-  components: { Idioma, Cocina, GeneralActCard},
+  components: { Idioma, Cocina, GeneralActCard }, // Los componentes especiales
+  
   data() {
-    // 💡 CORRECCIÓN 2: Almacenamos los componentes en el mapa como 'raw'
-    // para que Vue no intente rastrear su reactividad y lance el warning.
     return {
-      activities: [], 
+      activities: [], // La lista para la barra lateral (ahora con el formato correcto)
       activeTab: null,
       
+      // 2. ¡MAPA CORREGIDO!
+      // Las llaves (keys) AHORA deben coincidir EXACTAMENTE
+      // con el 'nombre' que pusiste en tu tabla 'Categorias_Actividad'
       componentMap: {
-        'Idioma': markRaw(Idioma),
+        'Idioma Polaco': markRaw(Idioma),
         'Cocina': markRaw(Cocina),
+        // Si 'Ballet' es el nombre en tu DB, también puedes mapearlo:
+        // 'Ballet': markRaw(GeneralActCard), // (Aunque el genérico ya lo agarra)
       },
-      API_BASE_URL: 'http://localhost:3000',
     };
   },
+  
   computed: {
     activeComponent() {
-        const activeActivity = this.activities.find(a => a.id === this.activeTab);
-        if (!activeActivity) return { component: null, props: {} };
+      // 3. BUSCAMOS LA ACTIVIDAD (¡Ajustado a 'nombre'!)
+      const activeActivity = this.activities.find(a => a.id === this.activeTab);
+      if (!activeActivity) return { component: null, props: {} };
 
-        const activityName = activeActivity.name;
-        
-        const activityDescription = activeActivity.descripcion || 'No hay descripción detallada.';
+      // Usamos el 'nombre' de la DB (ej. "Idioma Polaco")
+      const activityName = activeActivity.nombre; 
+      
+      // 4. BUSCAMOS EN EL MAPA
+      let ComponentToRender = this.componentMap[activityName];
+      
+      if (!ComponentToRender) {
+          ComponentToRender = markRaw(GeneralActCard); // El componente genérico
+      }
 
-        // 1. Determinar qué componente usar (especial o genérico)
-        let ComponentToRender = this.componentMap[activityName];
-        
-        // Si NO está mapeado, usar el genérico. También lo marcamos como raw.
-        if (!ComponentToRender) {
-            ComponentToRender = markRaw(GeneralActCard); // Marcamos el componente genérico también
-        }
-
-        // 2. Si es la plantilla genérica, devolver la configuración con props.
-        if (ComponentToRender === GeneralActCard) {
-            return {
-                component: ComponentToRender,
-                props: {
-                    activityId: activeActivity.id, 
-                    activityName: activityName,
-                    activityDescription: activityDescription,
-                }
-            };
-        }
-        
-        // 3. Devolver el componente especial (Idioma o Cocina), que ya está marcado como raw en data()
-        return { component: ComponentToRender, props: {} }; 
+      // 5. PASAMOS LOS PROPS CORRECTOS
+      // El componente 'GeneralActCard' espera 'activityName' y 'activityDescription'
+      // Se los pasamos desde nuestra nueva estructura.
+      if (ComponentToRender === GeneralActCard) {
+          return {
+              component: ComponentToRender,
+              props: {
+                  activityId: activeActivity.id, 
+                  activityName: activeActivity.nombre, // Pasamos el 'nombre'
+                  activityDescription: activeActivity.descripcion, // Pasamos la 'descripcion'
+                  fotoUrl: activeActivity.fotoUrl // <-- Se la pasamos al hijo
+              }
+          };
+      }
+      
+      // Es un componente especial (Idioma, Cocina), no necesita props
+      return { component: ComponentToRender, props: {} }; 
     }
   },
+  
   methods: {
     selectTab(activityId) {
       this.activeTab = activityId;
     },
     
-    
-    async fetchActivitiesFromBSDS() {
-      
+    // 6. ¡MÉTODO DE FETCH RECONSTRUIDO!
+    async fetchActivitiesFromAPI() { // Renombrado para más claridad
       try {
-        const ENDPOINT = '/actividades';
-
-        const response = await fetch(this.API_BASE_URL + ENDPOINT); 
-
-        if (!response.ok) {
-          throw new Error(`Error HTTP! Estado: ${response.status}`);
-        }
+        // Usamos nuestro apiClient (adiós 'fetch' y 'API_BASE_URL')
+        const response = await apiClient.get('/actividades'); 
         
-        const dbActivities = await response.json(); 
-        this.activities = dbActivities;
+        // La API nos da: [{ id, nombre, descripcion, fotoUrl, orden }]
+        const apiCategorias = response.data;
+        
+        // 7. ¡EL MAPEO! (La traducción)
+        // El template espera: { id, name, iconName }
+        // Hacemos la traducción:
+        this.activities = apiCategorias.map(categoria => ({
+          id: categoria.id,
+          name: categoria.nombre,
+          descripcion: categoria.descripcion,
+          nombre: categoria.nombre,
+          // ¡AÑADE ESTA LÍNEA SI NO ESTÁ!
+          fotoUrl: categoria.fotoUrl, // <-- Guardamos la URL de la foto principal
+          iconName: this.getIconFor(categoria.nombre) 
+        }));
 
+        // Seleccionamos el primero si no hay nada seleccionado
         if (this.activities.length > 0) {
           if (!this.activeTab || !this.activities.some(a => a.id === this.activeTab)) {
             this.activeTab = this.activities[0].id;
@@ -117,13 +133,24 @@ export default {
       } catch (error) {
         console.error("Error al obtener las actividades:", error);
       }
+    },
+
+    // 8. (Opcional) Un pequeño ayudante para los íconos
+    getIconFor(activityName) {
+      if (activityName.toLowerCase().includes('idioma')) return 'translate';
+      if (activityName.toLowerCase().includes('cocina')) return 'restaurant_menu';
+      if (activityName.toLowerCase().includes('ballet')) return 'person_celebrate';
+      return 'help'; // Ícono por defecto
     }
   },
+  
   created() {
-    this.fetchActivitiesFromBSDS();
+    // 9. Llamamos al nuevo método
+    this.fetchActivitiesFromAPI();
   }
 }
 </script>
+
 <style scoped>
 /* --------------------
     1. Variables de Diseño y Colores

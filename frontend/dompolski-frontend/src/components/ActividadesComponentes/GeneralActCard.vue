@@ -2,80 +2,97 @@
   <div class="generic-activity-container">
     <h2 class="activity-name-title">{{ activityName }}</h2>
     
-    <div v-if="isLoading" class="loading-state">Cargando detalles de {{ activityName }}...</div>
-    <div v-else-if="error" class="error-state">Error al cargar los detalles de la actividad: {{ error }}.</div>
-    
-    <div v-else class="activity-content-wrapper">
+    <div v-if="mediaSlides.length > 0" class="main-carousel-wrapper">
+      <div class="main-carousel">
+        <div 
+          v-for="(slide, index) in mediaSlides" 
+          :key="index" 
+          class="slide"
+          :class="{ 'active': index === currentSlideIndex }"
+        >
+          <img v-if="slide.tipo === 'imagen'" :src="slide.url" :alt="'Foto de ' + activityName" />
+          <video v-else-if="slide.tipo === 'video'" controls muted autoplay loop :src="slide.url">
+            Tu navegador no soporta el tag de video.
+          </video>
+        </div>
+      </div>
       
-      <div v-if="mediaSlides.length > 0" class="main-carousel-wrapper">
-        <div class="main-carousel">
-          <div 
-            v-for="(slide, index) in mediaSlides" 
-            :key="index" 
-            class="slide"
-            :class="{ 'active': index === currentSlideIndex }"
-          >
-            <img v-if="slide.tipo === 'imagen'" :src="slide.url" :alt="'Foto de ' + activityName" />
-            <video v-else-if="slide.tipo === 'video'" controls muted autoplay loop :src="slide.url">
-              Tu navegador no soporta el tag de video.
-            </video>
+      <template v-if="mediaSlides.length > 1">
+        <button class="prev-button" @click="prevSlide">◀</button>
+        <button class="next-button" @click="nextSlide">▶</button>
+      </template>
+
+      </div>
+    <div v-else class="no-media-placeholder-main">
+      {{ isLoading ? 'Cargando...' : 'No hay galería disponible.' }}
+    </div>
+
+    <hr class="separator">
+    
+    <div class="details-card">
+      <h3 class="card-section-title">Información de Cursos</h3>
+      
+      <p class="description-area">{{ activityDescription }}</p>
+
+      <div v-if="isLoading" class="loading-state">Cargando detalles...</div>
+      <div v-else-if="error" class="error-state">{{ error }}</div>
+
+      <div v-else-if="cursos.length > 0" class="cursos-grid">
+        
+        <div v-for="curso in cursos" :key="curso.id" class="curso-item">
+          
+          <h4 class="curso-nombre">{{ curso.nombre_curso }}</h4>
+          
+          <div class="info-grid">
+            <div class="info-group">
+              <h4 class="info-title">⏰ Horarios:</h4>
+              <p>{{ curso.horarios || 'Consultar' }}</p>
+            </div>
+            <div class="info-group">
+              <h4 class="info-title">📚 Niveles:</h4>
+              <p>{{ curso.niveles || 'General' }}</p>
+            </div>
+            <div class="info-group">
+              <h4 class="info-title">👦 Edades:</h4>
+              <p>{{ curso.edades || 'Todas' }}</p>
+            </div>
+            <div class="info-group">
+              <h4 class="info-title">👤 Contacto:</h4>
+              <p class="contact-email">{{ curso.contacto || 'N/A' }}</p>
+            </div>
           </div>
         </div>
-        
-        <template v-if="mediaSlides.length > 1">
-          <button class="prev-button" @click="prevSlide">◀</button>
-          <button class="next-button" @click="nextSlide">▶</button>
-        </template>
+
       </div>
-      <div v-else class="no-media-placeholder-main">No hay galería disponible para esta actividad.</div>
-
-      <hr class="separator">
       
-      <div class="details-card">
-          <h3 class="card-section-title">Información de Clases</h3>
-          
-          <p class="description-area">{{ activityDescription }}</p>
-
-          <div class="info-grid">
-              <div class="info-group">
-                  <h4 class="info-title">⏰ Horarios:</h4>
-                  <p>{{ activityDetails.schedule || 'Consultar en contacto' }}</p>
-              </div>
-              <div class="info-group">
-                  <h4 class="info-title">📚 Niveles:</h4>
-                  <p>{{ activityDetails.levels || 'General' }}</p>
-              </div>
-              <div class="info-group">
-                  <h4 class="info-title">👦 Edades:</h4>
-                  <p>{{ activityDetails.ageGroup || 'Todas las edades' }}</p>
-              </div>
-              <div class="info-group">
-                  <h4 class="info-title">👤 Contacto:</h4>
-                  <p class="contact-email">{{ activityDetails.contactInfo || 'N/A' }}</p>
-              </div>
-          </div>
+      <div v-else class="empty-state">
+        <p>Próximamente... Aún no hay cursos o detalles cargados para esta actividad.</p>
       </div>
     </div>
   </div>
 </template>
 <script>
-import axios from 'axios';
+// ¡YA NO IMPORTAMOS 'axios'!
+// Solo importamos nuestro cliente centralizado.
+import apiClient from '@/services/api'; 
 
 export default {
   name: 'GeneralActCard',
   props: {
     activityId: { type: [String, Number], required: true },
-    activityName: { type: String, required: true }, // Esto debe coincidir con lo que recibe del padre
-    activityDescription: { type: String, default: 'No hay descripción disponible para esta actividad.' }
-},
-// --- ESTADOS ---
-data() {
+    activityName: { type: String, required: true },
+    activityDescription: { type: String, default: 'No hay descripción disponible.' },
+    // Esta prop la recibe del padre (Actividades.vue)
+    fotoUrl: { type: String, default: null } 
+  },
+  data() {
     return {
       isLoading: true,
       error: null,
-      API_BASE_URL: 'http://localhost:3000',
-      activityDetails: {},
-      mediaSlides: [],
+      
+      cursos: [], // Para la información (horarios, niveles...)
+      
+      mediaSlides: [], // Para el carrusel
       currentSlideIndex: 0,
     };
   },
@@ -93,43 +110,46 @@ data() {
       this.currentSlideIndex = (this.currentSlideIndex - 1 + this.totalSlides) % this.totalSlides;
     },
 
-    // === CARGA DE DATOS ===
+    // === CARGA DE DATOS (EL MOTOR LIMPIO) ===
     async fetchActivityData() {
       this.isLoading = true;
       this.error = null;
       
       try {
-        // ENDPOINT 1: Carga los detalles estructurados (Horarios, Niveles, Contacto)
-        // 🛑 CORRECCIÓN 1: Se eliminan los asteriscos dobles que causaban el error 404
-        const ACT_URL = `${this.API_BASE_URL}/actividades/detalles/${this.activityId}`;
+        // 1. ENDPOINT DE LOS CURSOS (el que hicimos nosotros)
+        const cursosPromise = apiClient.get(`/actividades/${this.activityId}/cursos`);
         
-        // ENDPOINT 2: Carga la Multimedia (Carrusel)
-        const MEDIA_URL = `${this.API_BASE_URL}/multimedia/Actividad/${this.activityId}`;
+        // 2. ENDPOINT DEL CARRUSEL (el que usa Cocina)
+        // (Este endpoint '/multimedia' debe estar definido en tu app.js)
+        const mediaPromise = apiClient.get(`/multimedia/Actividad/${this.activityId}`);
         
-        // Usamos axios para manejar la respuesta JSON
-        const [detailsResponse, mediaResponse] = await Promise.all([
-          axios.get(ACT_URL),
-          axios.get(MEDIA_URL)
+        // 3. Ejecutamos ambas llamadas en paralelo
+        const [cursosResponse, mediaResponse] = await Promise.all([
+          cursosPromise,
+          mediaPromise
         ]);
 
-        this.activityDetails = detailsResponse.data;
+        // 4. LÓGICA DE CURSOS (la que ya funcionaba)
+        // (Muestra todos los cursos, no solo el primero)
+        this.cursos = cursosResponse.data;
+
+        // 5. LÓGICA DE CARRUSEL (¡RESUCITADA!)
+        // (Copiada de 'Cocina.vue')
         this.mediaSlides = mediaResponse.data;
         this.currentSlideIndex = 0;
         
       } catch (err) {
-        // Aquí capturamos el 404 (detalles) o el 500 (multimedia)
         console.error(`Error al cargar datos para ${this.activityName}:`, err.message);
-        
-        // El error 500 de multimedia (problema BigInt en Supabase) ahora debería
-        // ser manejado correctamente si aplicaste las correcciones de Express.
-        
-        this.error = `No se pudo cargar la información detallada de la actividad (${err.response?.status || err.code}).`;
+        // Si una de las dos llamadas falla (ej. /multimedia no existe), 
+        // el Promise.all completo fallará.
+        this.error = `No se pudo cargar la información detallada de la actividad.`;
       } finally {
         this.isLoading = false;
       }
     }
   },
   watch: {
+    // Esto está perfecto, recarga los datos si el ID cambia.
     activityId: { immediate: true, handler: 'fetchActivityData' }
   }
 };
@@ -159,4 +179,31 @@ data() {
 .info-title { font-size: 1.1em; color: #444; margin-bottom: 5px; font-weight: 600; }
 .info-group p { margin: 0; color: #555; }
 .contact-email { font-weight: bold; color: #007bff; }
+
+.cursos-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem; /* Espacio entre cada sub-curso */
+}
+
+.curso-item {
+  border: 1px solid #eee;
+  padding: 1.5rem;
+  border-radius: 8px;
+  background: #fdfdfd;
+}
+
+.curso-nombre {
+  font-size: 1.5rem;
+  color: #c00606; /* Color de acento */
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.empty-state, .loading-state {
+  text-align: center;
+  font-style: italic;
+  color: #666;
+  padding: 2rem;
+}
 </style>

@@ -97,24 +97,22 @@ const fetchMainMultimedia = async () => {
 
 // 2. Carga los detalles de los sub-cursos (Horarios, Niveles)
 const fetchCourseDetails = async () => {
-    try {
-        // Usaremos un endpoint nuevo para obtener detalles por ID de Actividad (no de detalleACT)
-        // Necesitamos un router que obtenga los detalles de detalleACT
-        const DETAILS_URL = `${API_BASE_URL}/cursos/idioma`; 
-        
-        // Dado que Idioma tiene dos cursos (ID 1 y 2), necesitamos un endpoint que traiga ambos.
-        // Por ahora, asumiremos que un nuevo router '/cursos/idioma' nos devuelve un array de los detalles.
-        const response = await axios.get(DETAILS_URL);
-        
-        // Filtrar solo los que realmente son de idioma, si el backend devuelve más:
-        // courses.value = response.data.filter(c => IDIOMA_SUB_IDS.includes(c.actividadId));
-        courses.value = response.data; // Asumimos que el backend solo trae lo de idioma.
-        
-    } catch (err) {
-        throw new Error(`Error de conexión al cargar cursos: ${err.message}`);
-    }
+  try {
+    // ¡CORREGIDO!
+    // En lugar de llamar al endpoint inventado '/cursos/idioma',
+    // llamamos al endpoint REAL que trae los cursos de la Categoría 1.
+    // (Asumimos que "Idioma" es la categoría con ID 1 en tu nueva tabla)
+    const DETAILS_URL = `${API_BASE_URL}/actividades/1/cursos`; 
+    
+    const response = await axios.get(DETAILS_URL);
+    
+    // Esta vez SÍ queremos el array completo (Niños y Adultos)
+    courses.value = response.data;
+    
+  } catch (err) {
+    throw new Error(`Error de conexión al cargar cursos: ${err.message}`);
+  }
 };
-
 // Lógica de Navegación del Carrusel
 const nextSlide = () => {
     if (totalSlides.value <= 1) return;
