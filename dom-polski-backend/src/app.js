@@ -13,7 +13,6 @@ import recetasRoutes from './routes/recetas.routes.js';
 import detalleACT from './routes/detalleACT.routes.js';
 import cursosRoutes from './routes/cursos.routes.js';
 
-
 if (typeof BigInt.prototype.toJSON !== 'function') {
   BigInt.prototype.toJSON = function() {
     return this.toString();
@@ -21,15 +20,7 @@ if (typeof BigInt.prototype.toJSON !== 'function') {
 }
 const app = express();
 const PORT = 3000;
-const corsOptions = {
-  origin: 'http://localhost:5173', // Tu puerto de Vue
-  // 1. Dile qué métodos aceptar
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  // 2. ¡LA CLAVE! Dile qué cabeceras aceptar
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  optionsSuccessStatus: 200 
-};
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 app.use('/detalleACT', detalleACT);
