@@ -24,6 +24,7 @@ const AdminNovedadesVista = () => import('../views/admin/AdminNovedadesVista.vue
 const AdminActividadesVista = () => import('../views/admin/AdminActividadesVista.vue')
 const AdminMiembrosVista = () => import('../views/admin/AdminMiembrosVista.vue')
 const AdminFormNovedad = () => import('../views/admin/AdminFormNovedad.vue');
+const AdminFormMiembro = () => import('../views/admin/AdminFormMiembro.vue');
 // (Sí, estos archivos aún no existen, los crearemos. Esto es el plan.)
 
 
@@ -105,6 +106,16 @@ const routes =[
         path: 'miembros', // Se accede con /admin/miembros
         name: 'AdminMiembros',
         component: AdminMiembrosVista
+      },
+      {
+        path: 'miembros/nuevo',
+        name: 'AdminMiembroCrear',
+        component: AdminFormMiembro
+      },
+      {
+        path: 'miembros/editar/:id',
+        name: 'AdminMiembroEditar',
+        component: AdminFormMiembro
       }
       // Aquí pondremos /admin/novedades/nuevo, etc.
     ]
