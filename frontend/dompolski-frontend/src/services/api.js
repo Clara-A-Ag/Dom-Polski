@@ -1,23 +1,23 @@
+// dom-polski-frontend/src/api.js (o donde lo tengas)
+
 import axios from 'axios';
 
-// URL del backend desde variable de entorno
-// En desarrollo: VITE_API_URL=http://localhost:3000
+// 1. URL del backend (¡esto ya lo tenías perfecto!)
 const API_URL = import.meta.env.VITE_API_URL;
 
-// Función genérica para obtener datos
-const fetchData = async (endpoint) => {
-  try {
-    const res = await axios.get(`${API_URL}${endpoint}`);
-    return res.data;
-  } catch (error) {
-    console.error(`Error en ${endpoint}:`, error);
-    throw error;
+// 2. ¡LA MEJORA! Creamos la "instancia" de Axios
+// Este es nuestro cliente de API centralizado
+const apiClient = axios.create({
+  baseURL: API_URL, // <-- La magia está aquí
+  headers: {
+    'Content-Type': 'application/json'
   }
-};
+});
 
-// Funciones específicas para cada recurso
-export const getNovedades = () => fetchData('/novedades');
-export const getActividades = () => fetchData('/actividades');
-export const getHistoria = () => fetchData('/historia');
-export const getMiembros = () => fetchData('/miembros');
-export const getRecetas = () => fetchData('/recetas');
+// 3. (PARA EL FUTURO - Fase 1 del Admin):
+// Aquí es donde, más adelante, le diremos a apiClient
+// que añada el token de Supabase a CADA petición.
+// apiClient.interceptors.request.use( ... )
+
+// 4. Exportamos el cliente para usarlo en TODOS lados
+export default apiClient;

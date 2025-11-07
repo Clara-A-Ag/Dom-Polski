@@ -21,7 +21,15 @@ if (typeof BigInt.prototype.toJSON !== 'function') {
 }
 const app = express();
 const PORT = 3000;
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:5173', // Tu puerto de Vue
+  // 1. Dile qué métodos aceptar
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  // 2. ¡LA CLAVE! Dile qué cabeceras aceptar
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200 
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/detalleACT', detalleACT);

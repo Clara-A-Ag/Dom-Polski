@@ -41,7 +41,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import MiembroCard from '@/components/AdministradorComponentes/MiembroCard.vue';
-import { getMiembros } from '@/services/api.js';
+
+// 1. CAMBIO: Importamos la *nueva* herramienta 'apiClient'
+import apiClient from '@/services/api.js'; 
+// (Asumo que está en '@/services/api.js', si no, ajusta la ruta)
 
 const comisionDirectiva = ref([]);
 const audiovisuales = ref([]);
@@ -50,10 +53,17 @@ const loading = ref(true);
 
 const fetchMiembros = async () => {
   try {
-    const miembros = await getMiembros();
+    // 2. CAMBIO: Usamos la nueva herramienta
+    // En lugar de: const miembros = await getMiembros();
+    // Hacemos:
+    const response = await apiClient.get('/miembros');
+    const miembros = response.data; // Los datos están en response.data
+
+    // (El resto de tu lógica de filtrado está perfecta)
     comisionDirectiva.value = miembros.filter(m => m.area === 'Comisión Directiva');
     audiovisuales.value = miembros.filter(m => m.area === 'Audiovisuales');
     ballet.value = miembros.filter(m => m.area === 'Ballet');
+
   } catch (error) {
     console.error('Error al obtener los miembros:', error);
   } finally {
