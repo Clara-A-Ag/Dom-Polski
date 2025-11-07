@@ -8,7 +8,7 @@ Este es un sistema web completo desarrollado como proyecto final de [Nombre de t
 
 ## 🚀 Stack Tecnológico
 
-Este proyecto NO utiliza Laravel. Está construido con un stack MERN/MEVN moderno (JavaScript de punta a punta), aprovechando un servicio de BaaS (Backend as a Service) para máxima eficiencia y seguridad.
+Está construido con un stack MERN/MEVN moderno (JavaScript de punta a punta), aprovechando un servicio de BaaS (Backend as a Service) para máxima eficiencia y seguridad.
 
 * 🎨 **Frontend:** **Vue.js 3** (con Composition API y Vite)
     * *Manejo de Rutas:* Vue Router
