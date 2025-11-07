@@ -48,7 +48,7 @@ Las instrucciones detalladas de instalación (`npm install`) y la configuración
 
 ### 2. Iniciar el Frontend (El Escaparate)
 
-**[Haz clic aquí para ver el README del Frontend](./dom-polski-frontend/README.md)**
+**[Haz clic aquí para ver el README del Frontend](./dompolski-frontend/README.md)**
 
 ---
 
