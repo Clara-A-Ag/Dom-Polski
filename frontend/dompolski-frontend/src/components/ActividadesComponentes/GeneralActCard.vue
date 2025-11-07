@@ -67,8 +67,9 @@ export default {
     activityId: { type: [String, Number], required: true },
     activityName: { type: String, required: true }, // Esto debe coincidir con lo que recibe del padre
     activityDescription: { type: String, default: 'No hay descripción disponible para esta actividad.' }
-  },
-  data() {
+},
+// --- ESTADOS ---
+data() {
     return {
       isLoading: true,
       error: null,
