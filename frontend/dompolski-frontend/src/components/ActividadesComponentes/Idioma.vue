@@ -10,8 +10,8 @@
           class="slide"
           :class="{ 'active': index === currentSlideIndex }"
         >
-          <img v-if="slide.tipo === 'image'" :src="slide.src" alt="Foto de clase de idioma" />
-          <video v-else-if="slide.tipo === 'video'" controls muted autoplay loop :src="slide.src">
+          <img v-if="slide.tipo === 'imagen'" :src="slide.url" alt="Foto de clase de idioma" />
+          <video v-else-if="slide.tipo === 'video'" controls muted autoplay loop :src="slide.url">
             Tu navegador no soporta el tag de video.
           </video>
         </div>
@@ -147,7 +147,6 @@ onMounted(() => {
     loadContent();
 });
 </script>
-
 <style scoped>
 /* --- Estilos Generales --- */
 .idioma-container { padding: 2rem; max-width: 900px; margin: auto; }
@@ -156,59 +155,31 @@ onMounted(() => {
 .separator { border: 0; height: 1px; background-color: #eee; margin: 3rem 0; }
 
 /* --- Estilos del Carrusel (Mantener de Cocina/Ballet) --- */
-.main-carousel-wrapper {
-    position: relative; height: 400px; margin: 0 auto; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
+.main-carousel-wrapper { position: relative; max-width: 900px;  height: 400px; margin: 0 auto; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);}
 .main-carousel { position: relative; width: 100%; height: 100%; }
-.slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-in-out; }
+.slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-in-out;}
 .slide.active { opacity: 1; z-index: 1; }
 .slide img, .slide video { width: 100%; height: 100%; object-fit: cover; }
-.prev-button, .next-button {
-    position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.6); color: white; border: none;
-    padding: 10px; cursor: pointer; z-index: 10; border-radius: 4px;
-}
+.prev-button, .next-button { position: absolute; top: 50%; transform: translateY(-50%);background: rgba(0, 0, 0, 0.6); color: white; border: none;padding: 10px; cursor: pointer; z-index: 10; border-radius:4px; }
 .prev-button { left: 10px; }
 .next-button { right: 10px; }
 
 
 /* --- Estilos de la Lista de Cursos --- */
-.courses-list {
-    display: grid;
-    gap: 30px;
-}
-.course-card {
-    border: 1px solid #d0c8b3;
-    border-radius: 8px;
-    padding: 20px;
-    background-color: #fcfcfc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-}
+.courses-list {display: grid;gap: 30px;}
+.course-card {border: 1px solid #d0c8b3;border-radius: 8px;padding: 20px;background-color: #fcfcfc;box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);}
 .course-title {
-    color: #333;
-    font-size: 1.5rem;
-    margin-top: 0;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #d90022;
-    padding-bottom: 5px;
+color: #333;
+font-size: 1.5rem;
+margin-top: 0;
+margin-bottom: 15px;
+border-bottom: 2px solid #d90022;
+padding-bottom: 5px;
 }
-.course-details-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
+.course-details-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;
 }
-.detail-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.detail-item strong {
-    color: #555;
-}
-.detail-item p {
-    margin: 0;
-}
-.detail-icon {
-    font-size: 1.5rem;
-    color: #d90022;
-}
+.detail-item {display: flex;align-items: center;gap: 10px;}
+.detail-item strong {color: #555;}
+.detail-item p { margin: 0;}
+.detail-icon {font-size: 1.5rem;color: #d90022;}
 </style>

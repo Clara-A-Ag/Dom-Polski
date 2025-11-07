@@ -10,8 +10,8 @@
           class="slide"
           :class="{ 'active': index === currentSlideIndex }"
         >
-          <img v-if="slide.tipo === 'image'" :src="slide.src" alt="Foto de cocina" />
-          <video v-else-if="slide.tipo === 'video'" controls muted autoplay loop :src="slide.src">
+          <img v-if="slide.tipo === 'imagen'" :src="slide.url" alt="Foto de cocina" />
+          <video v-else-if="slide.tipo === 'video'" controls muted autoplay loop :src="slide.url">
             Tu navegador no soporta el tag de video.
           </video>
         </div>
@@ -336,7 +336,7 @@ onMounted(() => {
 }
 
 /* --- Estilos del Carrusel --- */
-/* (Mantén tus estilos de carrusel aquí) */
+
 .main-carousel-wrapper { position: relative; max-width: 900px;  height: 400px; margin: 0 auto; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);}
 
 .main-carousel { position: relative; width: 100%; height: 100%; }

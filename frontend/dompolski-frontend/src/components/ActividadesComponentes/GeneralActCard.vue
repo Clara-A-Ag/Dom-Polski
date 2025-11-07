@@ -15,8 +15,8 @@
             class="slide"
             :class="{ 'active': index === currentSlideIndex }"
           >
-            <img v-if="slide.tipo === 'image'" :src="slide.src" :alt="'Foto de ' + activityName" />
-            <video v-else-if="slide.tipo === 'video'" controls muted autoplay loop :src="slide.src">
+            <img v-if="slide.tipo === 'imagen'" :src="slide.url" :alt="'Foto de ' + activityName" />
+            <video v-else-if="slide.tipo === 'video'" controls muted autoplay loop :src="slide.url">
               Tu navegador no soporta el tag de video.
             </video>
           </div>
@@ -137,13 +137,12 @@ export default {
 
 <style scoped>
 /* Estilos del Carrusel */
-.main-carousel-wrapper { position: relative; max-width: 900px; height: 400px; margin: 0 auto; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0)}
+.main-carousel-wrapper { position: relative; max-width: 900px;  height: 400px; margin: 0 auto; overflow: hidden; border-radius: 8px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);}
 .main-carousel { position: relative; width: 100%; height: 100%; }
-.slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-in-out; }
+.slide { position: absolute; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease-in-out;}
 .slide.active { opacity: 1; z-index: 1; }
 .slide img, .slide video { width: 100%; height: 100%; object-fit: cover; }
-.no-media-placeholder-main { text-align: center; padding: 2rem; color: #999; border: 1px dashed #ccc; border-radius: 8px; max-width: 900px; margin: 0 auto; }
-.prev-button, .next-button { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0, 0, 0, 0.6); color: white; border: none; padding: 10p}
+.prev-button, .next-button { position: absolute; top: 50%; transform: translateY(-50%);background: rgba(0, 0, 0, 0.6); color: white; border: none;padding: 10px; cursor: pointer; z-index: 10; border-radius:4px; }
 .prev-button { left: 10px; }
 .next-button { right: 10px; }
 
