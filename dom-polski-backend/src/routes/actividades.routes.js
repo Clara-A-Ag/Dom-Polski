@@ -43,7 +43,7 @@ router.get('/detalles/:id', async (req, res) => {
         // --- 1. VERIFICAR: Nombre de la tabla y filtro 'actividadId' ---
         const { data, error } = await supabase
             .from('detalleACT') // <-- ¡Verifica que la tabla se llame EXACTAMENTE 'detalleACT'!
-            .select('nombre, horarios, niveles, edades, contacto') // <-- ¡Verifica los nombres de estas columnas!
+            .select('activityName, horarios, niveles, edades, contacto') // <-- ¡Verifica los nombres de estas columnas!
             .eq('actividadId', actividadId) // <-- ¡Verifica que la columna se llame EXACTAMENTE 'actividadId'!
             .maybeSingle(); 
 
